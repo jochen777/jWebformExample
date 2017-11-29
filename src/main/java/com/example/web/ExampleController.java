@@ -41,7 +41,7 @@ public class ExampleController {
     // }
 
 
-    return "example";
+    return "bootstrap";
   }
 
 

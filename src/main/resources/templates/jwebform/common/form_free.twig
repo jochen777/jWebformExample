@@ -1,0 +1,44 @@
+{# todo don't use theme here! #}
+{% macro jw_renderStart(form) %}
+{{ form.startEnd.start | raw }}
+{% endmacro %}
+
+{# todo don't use theme here! #}
+{% macro jw_renderEnd(form) %}
+{{ form.startEnd.end | raw }}
+{% endmacro %}
+
+{% macro renderSubmit(element) %}
+<input tabindex="{{ element.producerInfos.tabIndex }}" type="submit" value="Save">
+{% endmacro %}
+
+
+{% macro renderTextType(element) %}
+<div class="form-group">
+<label class="control-label" for="{{ element.producerInfos.nameOfInput }}">{{ element.element.oneValueElement.decoration.label }}:</label>
+<input class="form-control" tabindex="{{ element.producerInfos.tabIndex }}" type="text" name="{{ element.producerInfos.nameOfInput }}" value="{{ element.elementResult.value }}" aria-describedby="helpBlock-{{ element.producerInfos.nameOfInput }}">
+<span id="helpBlock-{{ element.producerInfos.nameOfInput }}" class="help-block">{{ element.element.oneValueElement.decoration.helptext }}</span>
+</div>
+{% endmacro %}
+
+
+{% macro jw_renderElementFree(element) %}
+{% if element.elementTypeName == "jwebform.element.TextType" %}
+{{ renderTextType(element) }}
+{% endif %}
+{% if element.elementTypeName == "jwebform.element.SubmitType" %}
+{{ renderSubmit(element) }}
+{% endif %}
+
+{{ element.elementTypeName | raw }}<br>
+{% endmacro %}
+
+
+{# renders the form completly within the template #}
+{% macro jw_renderFormFree(form) %}
+{{ jw_renderStart(form) }}
+{% for element in form.unrenderedElements %}
+{{ jw_renderElementFree(element) }}
+{% endfor %}
+{{ jw_renderEnd(form) }}
+{% endmacro %}

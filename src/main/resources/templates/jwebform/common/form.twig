@@ -16,10 +16,10 @@
 {{ jw_renderStart(form) }}
 {% for name in form.elementNames %}
 
+{# uses the theme to render html #}
 {{ jw_renderElement(form.elements[name]) }}
 {#  form.elements[name].elementResult.staticElementInfo.renderKey   #}<br>
 {% endfor %}
 {{ jw_renderEnd(form) }}
 {% endmacro %}
-
 
