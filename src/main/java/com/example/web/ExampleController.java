@@ -29,7 +29,7 @@ public class ExampleController {
     Theme theme = BootstrapTheme.instance(msg -> msg);
     FormResult formResult = ExampleForm.build("id").run(new DebuggingRequestEnv(request)
         .cloneWithMaxLenInput(500).cloneWithNullCheck().cloneWithTrim());
-    model.addAttribute("form", formResult.getView().getHtml(theme, "GET", true));
+    model.addAttribute("form", formResult.getView(theme).getHtml("GET", true));
     model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
@@ -51,7 +51,7 @@ public class ExampleController {
     FormResult formResult =
         FormcheckerCopyForm.build("example").run(new DebuggingRequestEnv(request)
             .cloneWithMaxLenInput(500).cloneWithNullCheck().cloneWithTrim());
-    model.addAttribute("form", formResult.getView().getHtml(theme, "GET", true));
+    model.addAttribute("form", formResult.getView(theme).getHtml("GET", true));
     model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
