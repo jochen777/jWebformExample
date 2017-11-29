@@ -17,3 +17,5 @@ target/
 
 /sonar-project.properties
 /.gitconfig
+/mvnw
+/mvnw.cmd
