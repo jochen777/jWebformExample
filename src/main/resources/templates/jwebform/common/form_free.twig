@@ -16,8 +16,14 @@
 {% macro renderTextType(element) %}
 <div class="form-group">
 <label class="control-label" for="{{ element.producerInfos.nameOfInput }}">{{ element.element.oneValueElement.decoration.label }}:</label>
-<input class="form-control" tabindex="{{ element.producerInfos.tabIndex }}" type="text" name="{{ element.producerInfos.nameOfInput }}" value="{{ element.elementResult.value }}" aria-describedby="helpBlock-{{ element.producerInfos.nameOfInput }}">
+<input class="form-control" tabindex="{{ element.producerInfos.tabIndex }}" type="text" name="{{ element.producerInfos.nameOfInput }}" value="{{ element.elementResult.value }}" 
+{% if element.element.oneValueElement.decoration.helptext is not empty %}
+aria-describedby="helpBlock-{{ element.producerInfos.nameOfInput }}"
+{% endif %}
+>
+{% if element.element.oneValueElement.decoration.helptext is not empty %}
 <span id="helpBlock-{{ element.producerInfos.nameOfInput }}" class="help-block">{{ element.element.oneValueElement.decoration.helptext }}</span>
+{% endif %}
 </div>
 {% endmacro %}
 
