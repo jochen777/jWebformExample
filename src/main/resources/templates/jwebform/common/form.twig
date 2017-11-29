@@ -1,0 +1,25 @@
+{% macro jw_renderStart(form) %}
+{{ form.startEnd.start | raw }}
+{% endmacro %}
+
+{% macro jw_renderEnd(form) %}
+{{ form.startEnd.end | raw }}
+{% endmacro %}
+
+
+{% macro jw_renderElement(element) %}
+{{ element.html | raw }}
+{% endmacro %}
+
+
+{% macro jw_renderForm(form) %}
+{{ jw_renderStart(form) }}
+{% for name in form.elementNames %}
+
+{{ jw_renderElement(form.elements[name]) }}
+{#  form.elements[name].elementResult.staticElementInfo.renderKey   #}<br>
+{% endfor %}
+{{ jw_renderEnd(form) }}
+{% endmacro %}
+
+
