@@ -9,35 +9,50 @@
 {% endmacro %}
 
 {% macro renderSubmit(element) %}
-<input tabindex="{{ element.producerInfos.tabIndex }}" type="submit" value="Save">
+<input tabindex="{{ element.tabIndex }}" type="submit" value="Save">
 {% endmacro %}
 
 
-{% macro renderTextType(element) %}
+{% macro renderTextType(element, type) %}
 <div class="form-group">
-<label class="control-label" for="{{ element.producerInfos.nameOfInput }}">{{ element.element.oneValueElement.decoration.label }}:</label>
-<input class="form-control" tabindex="{{ element.producerInfos.tabIndex }}" type="text" name="{{ element.producerInfos.nameOfInput }}" value="{{ element.elementResult.value }}" 
+<label class="control-label" for="{{ element.nameOfInput }}">{{ element.element.oneValueElement.decoration.label }}:</label>
+<input class="form-control" tabindex="{{ element.tabIndex }}" type="{{ type }}" name="{{ element.nameOfInput }}" value="{{ element.elementResult.value }}" 
 {% if element.element.oneValueElement.decoration.helptext is not empty %}
-aria-describedby="helpBlock-{{ element.producerInfos.nameOfInput }}"
-{% endif %}
->
+aria-describedby="helpBlock-{{ element.nameOfInput }}"
+{% endif %} >
 {% if element.element.oneValueElement.decoration.helptext is not empty %}
-<span id="helpBlock-{{ element.producerInfos.nameOfInput }}" class="help-block">{{ element.element.oneValueElement.decoration.helptext }}</span>
+<span id="helpBlock-{{ element.nameOfInput }}" class="help-block">{{ element.element.oneValueElement.decoration.helptext }}</span>
 {% endif %}
 </div>
 {% endmacro %}
 
 
+
 {% macro jw_renderElementFree(element) %}
 {% if element.elementTypeName == "jwebform.element.TextType" %}
-{{ renderTextType(element) }}
+{{ renderTextType(element, "text") }}
 {% endif %}
 {% if element.elementTypeName == "jwebform.element.SubmitType" %}
 {{ renderSubmit(element) }}
 {% endif %}
-
-{{ element.elementTypeName | raw }}<br>
+{% if element.elementTypeName == "jwebform.element.NumberType" %}
+{{ renderTextType(element, "number") }}
+{% endif %}
+{% if element.elementTypeName == "jwebform.element.PasswordType" %}
+{{ renderTextType(element, "password") }}
+{% endif %}
+{# { element.elementTypeName } #}
+<br>
 {% endmacro %}
+
+{#
+TODO: 
+Einzelne 
+* Label ausgabe
+* Input-Field ausgabe
+* Helptext ausgabe
+* error-Ausgabe
+#}
 
 
 {# renders the form completly within the template #}

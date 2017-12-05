@@ -74,7 +74,7 @@ public class ExampleController {
         new RequestEnv(request).cloneWithMaxLenInput(500).cloneWithNullCheck().cloneWithTrim());
     model.addAttribute("form", formResult.getView());
     if (formResult.isOk()) {
-      System.err.println("Everything is fine!");
+      System.err.println("Everything is fined!");
     }
     // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
     // model.addAttribute("form2", formResult2.getView().getHtml(theme));
