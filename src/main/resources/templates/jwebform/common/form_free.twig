@@ -13,35 +13,63 @@
 {% endmacro %}
 
 
-{% macro renderTextType(element, type) %}
+{% macro renderTextType(producerInfo, type) %}
 <div class="form-group">
-<label class="control-label" for="{{ element.nameOfInput }}">{{ element.element.oneValueElement.decoration.label }}:</label>
-<input class="form-control" tabindex="{{ element.tabIndex }}" type="{{ type }}" name="{{ element.nameOfInput }}" value="{{ element.elementResult.value }}" 
-{% if element.element.oneValueElement.decoration.helptext is not empty %}
-aria-describedby="helpBlock-{{ element.nameOfInput }}"
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+<input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}" 
+{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
+aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endif %} >
-{% if element.element.oneValueElement.decoration.helptext is not empty %}
-<span id="helpBlock-{{ element.nameOfInput }}" class="help-block">{{ element.element.oneValueElement.decoration.helptext }}</span>
+{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
+<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
+{% endif %}
+</div>
+{% endmacro %}
+
+{% macro renderTextDateType(producerInfo) %}
+<div class="form-group">
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:</label>
+{% for piChild in producerInfo.childs %}
+{{ jw_renderElementFree(piChild) }}
+{% endfor %}
+</div>
+{% endmacro %}
+
+
+{% macro renderSelectType(producerInfo) %}
+<div class="form-group">
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+<select class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
+{% for selectElem in producerInfo.element.entries %}
+<option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
+{% endfor %}
+</select>
+{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
+<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
 {% endif %}
 </div>
 {% endmacro %}
 
 
 
-{% macro jw_renderElementFree(element) %}
-{% if element.elementTypeName == "jwebform.element.TextType" %}
-{{ renderTextType(element, "text") }}
+{% macro jw_renderElementFree(producerInfo) %}
+{% if  producerInfo.elementTypeName == "jwebform.element.XSRFProtectionType" %}
+{{ producerInfo.html | raw }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.TextType" %}
+{{ renderTextType(producerInfo, "text") }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.SubmitType" %}
+{{ renderSubmit(producerInfo) }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.NumberType" %}
+{{ renderTextType(producerInfo, "number") }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.TextDateType" %}
+{{ renderTextDateType(producerInfo) }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.SelectType" %}
+{{ renderSelectType(producerInfo) }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
+{{ renderTextType(producerInfo, "password") }}
+{% else  %}
+{{ producerInfo.elementTypeName }}
 {% endif %}
-{% if element.elementTypeName == "jwebform.element.SubmitType" %}
-{{ renderSubmit(element) }}
-{% endif %}
-{% if element.elementTypeName == "jwebform.element.NumberType" %}
-{{ renderTextType(element, "number") }}
-{% endif %}
-{% if element.elementTypeName == "jwebform.element.PasswordType" %}
-{{ renderTextType(element, "password") }}
-{% endif %}
-{# { element.elementTypeName } #}
 <br>
 {% endmacro %}
 
@@ -58,8 +86,8 @@ Einzelne
 {# renders the form completly within the template #}
 {% macro jw_renderFormFree(form) %}
 {{ jw_renderStart(form) }}
-{% for element in form.unrenderedElements %}
-{{ jw_renderElementFree(element) }}
+{% for producerInfo in form.unrenderedElements %}
+{{ jw_renderElementFree(producerInfo) }}
 {% endfor %}
 {{ jw_renderEnd(form) }}
 {% endmacro %}
