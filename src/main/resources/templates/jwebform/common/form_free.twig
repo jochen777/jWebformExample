@@ -39,6 +39,18 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
+{% macro renderRadioType(producerInfo) %}
+<div class="form-group">
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+{% for radioEntry in producerInfo.element.entries %}
+<div class="radio">
+<label>
+  <input type="radio" name="{{ producerInfo.nameOfInput }}" id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}" value="{{ radioEntry.key}}" >
+    {{ radioEntry.value}}</label>
+</div>
+{% endfor %}
+</div>
+{% endmacro %}
 
 {% macro renderTextDateType(producerInfo) %}
 <div class="form-group">
@@ -93,12 +105,13 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {{ renderTextAreaType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
 {{ renderTextType(producerInfo, "password") }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
+{{ renderRadioType(producerInfo) }}
 {% else  %}
 {{ producerInfo.elementTypeName }}
 {% endif %}
 
 
-<br>
 {% endmacro %}
 
 {#

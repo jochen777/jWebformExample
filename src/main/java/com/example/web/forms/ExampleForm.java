@@ -73,13 +73,13 @@ public class ExampleForm {
     elements.add(firstname);
     elements.add(lastname);
     elements.add(birthday);
+    elements.add(radio);
     elements.add(number);
     elements.add(gender);
     elements.add(optin);
     elements.add(textArea);
     elements.add(number2);
     elements.add(password);
-    elements.add(radio);
     elements.add(checkoutDate);
     elements.add(submit);
     formValidators.add(it -> {
