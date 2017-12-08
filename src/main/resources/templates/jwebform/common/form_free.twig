@@ -26,6 +26,20 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
+{% macro renderTextAreaType(producerInfo) %}
+<div class="form-group">
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+<textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}"  
+{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
+aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
+{% endif %} >{{ producerInfo.elementResult.value }}</textarea>
+{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
+<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
+{% endif %}
+</div>
+{% endmacro %}
+
+
 {% macro renderTextDateType(producerInfo) %}
 <div class="form-group">
 <label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:</label>
@@ -75,6 +89,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {{ renderSelectType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.CheckBoxType" %}
 {{ renderCheckBoxType(producerInfo) }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.TextAreaType" %}
+{{ renderTextAreaType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
 {{ renderTextType(producerInfo, "password") }}
 {% else  %}
