@@ -50,7 +50,15 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
-
+{% macro renderCheckBoxType(producerInfo) %}
+<div class="form-group">
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:{{ producerInfo.elementResult.valueObject }}</label>
+<input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
+{% if producerInfo.element.decoration.helptext is not empty %}
+<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.decoration.helptext }}</span>
+{% endif %}
+</div>
+{% endmacro %}
 
 {% macro jw_renderElementFree(producerInfo) %}
 {% if  producerInfo.elementTypeName == "jwebform.element.XSRFProtectionType" %}
@@ -65,11 +73,15 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {{ renderTextDateType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.SelectType" %}
 {{ renderSelectType(producerInfo) }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.CheckBoxType" %}
+{{ renderCheckBoxType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
 {{ renderTextType(producerInfo, "password") }}
 {% else  %}
 {{ producerInfo.elementTypeName }}
 {% endif %}
+
+
 <br>
 {% endmacro %}
 

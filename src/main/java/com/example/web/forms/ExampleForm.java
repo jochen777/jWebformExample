@@ -33,7 +33,7 @@ public class ExampleForm {
     XSRFProtectionType xsrfProtection = new XSRFProtectionType();
 
     ElementContainer firstname =
-        new TextType("firstname", new OneFieldDecoration("Your firstname", "help", ""), "Jochen")
+        new TextType("firstname", new OneFieldDecoration("Your firstname", "hilfe zum Vorname", ""), "Jochen")
             .of(new Validator());
     ElementContainer lastname =
         new TextType("lastname", new OneFieldDecoration("Your lastname", "help", "placeholder"), "")
