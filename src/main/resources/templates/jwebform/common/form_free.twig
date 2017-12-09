@@ -8,25 +8,25 @@
 {{ form.startEnd.end | raw }}
 {% endmacro %}
 
-{% macro renderSubmit(element) %}
+{% macro jw_renderSubmit(element) %}
 <input tabindex="{{ element.tabIndex }}" type="submit" value="Save">
 {% endmacro %}
 
-{% macro startingDiv(producerInfo) %}
+{% macro jw_startingDiv(producerInfo) %}
 <div class="form-group {{ producerInfo.elementResult.validationResult.isSuccess? "has-success":
 (producerInfo.elementResult.validationResult.isError?"has-error":"")
 }}">
 {% endmacro %}
 
-{% macro label(name, label) %}
+{% macro jw_label(name, label) %}
 <label class="control-label" for="{{ name }}">{{ label }}:</label>
 {% endmacro %}
 
 
 
-{% macro renderTextType(producerInfo, type) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
+{% macro jw_renderTextType(producerInfo, type) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 <input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}" 
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
@@ -40,9 +40,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
-{% macro renderTextAreaType(producerInfo) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
+{% macro jw_renderTextAreaType(producerInfo) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 <textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}"  
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
@@ -53,9 +53,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
-{% macro renderRadioType(producerInfo) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
+{% macro jw_renderRadioType(producerInfo) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 {% for radioEntry in producerInfo.element.entries %}
 <div class="radio">
 <label>
@@ -67,9 +67,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
-{% macro renderTextDateType(producerInfo) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
+{% macro jw_renderTextDateType(producerInfo) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 {% for piChild in producerInfo.childs %}
 {{ jw_renderElementFree(piChild) }}
 {% endfor %}
@@ -77,9 +77,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endmacro %}
 
 
-{% macro renderSelectDateType(producerInfo) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
+{% macro jw_renderSelectDateType(producerInfo) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 {% for piChild in producerInfo.childs %}
 {{ jw_renderElementFree(piChild) }}
 {% endfor %}
@@ -87,9 +87,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endmacro %}
 
 
-{% macro renderSelectType(producerInfo) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
+{% macro jw_renderSelectType(producerInfo) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 <select class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
 {% for selectElem in producerInfo.element.entries %}
 <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
@@ -101,9 +101,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 </div>
 {% endmacro %}
 
-{% macro renderCheckBoxType(producerInfo) %}
-{{ startingDiv(producerInfo) }}
-{{ label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
+{% macro jw_renderCheckBoxType(producerInfo) %}
+{{ jw_startingDiv(producerInfo) }}
+{{ jw_label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 <input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
 {% if producerInfo.element.decoration.helptext is not empty %}
 <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.decoration.helptext }}</span>
@@ -115,25 +115,25 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% if  producerInfo.elementTypeName == "jwebform.element.XSRFProtectionType" %}
 {{ producerInfo.html | raw }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.TextType" %}
-{{ renderTextType(producerInfo, "text") }}
+{{ jw_renderTextType(producerInfo, "text") }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.SubmitType" %}
-{{ renderSubmit(producerInfo) }}
+{{ jw_renderSubmit(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.NumberType" %}
-{{ renderTextType(producerInfo, "number") }}
+{{ jw_renderTextType(producerInfo, "number") }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.TextDateType" %}
-{{ renderTextDateType(producerInfo) }}
+{{ jw_renderTextDateType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.SelectType" %}
-{{ renderSelectType(producerInfo) }}
+{{ jw_renderSelectType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.CheckBoxType" %}
-{{ renderCheckBoxType(producerInfo) }}
+{{ jw_renderCheckBoxType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.TextAreaType" %}
-{{ renderTextAreaType(producerInfo) }}
+{{ jw_renderTextAreaType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.SelectDateType" %}
-{{ renderSelectDateType(producerInfo) }}
+{{ jw_renderSelectDateType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
-{{ renderTextType(producerInfo, "password") }}
+{{ jw_renderTextType(producerInfo, "password") }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
-{{ renderRadioType(producerInfo) }}
+{{ jw_renderRadioType(producerInfo) }}
 {% else  %}
 {{ producerInfo.elementTypeName }}
 {% endif %}
