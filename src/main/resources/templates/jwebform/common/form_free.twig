@@ -12,10 +12,21 @@
 <input tabindex="{{ element.tabIndex }}" type="submit" value="Save">
 {% endmacro %}
 
+{% macro startingDiv(producerInfo) %}
+<div class="form-group {{ producerInfo.elementResult.validationResult.isSuccess? "has-success":
+(producerInfo.elementResult.validationResult.isError?"has-error":"")
+}}">
+{% endmacro %}
+
+{% macro label(name, label) %}
+<label class="control-label" for="{{ name }}">{{ label }}:</label>
+{% endmacro %}
+
+
 
 {% macro renderTextType(producerInfo, type) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 <input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}" 
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
@@ -23,12 +34,15 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
 {% endif %}
+{% if producerInfo.elementResult.validationResult.isError %}
+<span class="helpBlock error">{{ producerInfo.elementResult.validationResult.message }}</span>
+{% endif %}
 </div>
 {% endmacro %}
 
 {% macro renderTextAreaType(producerInfo) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 <textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}"  
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
@@ -40,8 +54,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endmacro %}
 
 {% macro renderRadioType(producerInfo) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 {% for radioEntry in producerInfo.element.entries %}
 <div class="radio">
 <label>
@@ -54,8 +68,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endmacro %}
 
 {% macro renderTextDateType(producerInfo) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 {% for piChild in producerInfo.childs %}
 {{ jw_renderElementFree(piChild) }}
 {% endfor %}
@@ -64,8 +78,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 
 
 {% macro renderSelectDateType(producerInfo) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 {% for piChild in producerInfo.childs %}
 {{ jw_renderElementFree(piChild) }}
 {% endfor %}
@@ -74,8 +88,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 
 
 {% macro renderSelectType(producerInfo) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.label) }}
 <select class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
 {% for selectElem in producerInfo.element.entries %}
 <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
@@ -88,8 +102,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endmacro %}
 
 {% macro renderCheckBoxType(producerInfo) %}
-<div class="form-group">
-<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:{{ producerInfo.elementResult.valueObject }}</label>
+{{ startingDiv(producerInfo) }}
+{{ label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 <input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
 {% if producerInfo.element.decoration.helptext is not empty %}
 <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.decoration.helptext }}</span>
