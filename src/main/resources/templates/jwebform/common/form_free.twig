@@ -1,3 +1,5 @@
+{###### Helper ##############}
+
 {# todo don't use theme here! #}
 {% macro jw_renderStart(form) %}
 {{ form.startEnd.start | raw }}
@@ -22,7 +24,13 @@
 <label class="control-label" for="{{ name }}">{{ label }}:</label>
 {% endmacro %}
 
+{% macro jw_error(producerInfo) %}
+{% if producerInfo.elementResult.validationResult.isError %}
+<span class="helpBlock error">{{ producerInfo.elementResult.validationResult.message }}</span>
+{% endif %}
+{% endmacro %}
 
+{###### Types ##############}
 
 {% macro jw_renderTextType(producerInfo, type) %}
 {{ jw_startingDiv(producerInfo) }}
@@ -34,9 +42,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
 {% endif %}
-{% if producerInfo.elementResult.validationResult.isError %}
-<span class="helpBlock error">{{ producerInfo.elementResult.validationResult.message }}</span>
-{% endif %}
+{{ jw_error(producerInfo) }}
 </div>
 {% endmacro %}
 
@@ -47,9 +53,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endif %} >{{ producerInfo.elementResult.value }}</textarea>
-{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
-<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
-{% endif %}
+{{ jw_error(producerInfo) }}
 </div>
 {% endmacro %}
 
@@ -95,9 +99,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
 {% endfor %}
 </select>
-{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
-<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
-{% endif %}
+{{ jw_error(producerInfo) }}
 </div>
 {% endmacro %}
 
@@ -110,6 +112,9 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endif %}
 </div>
 {% endmacro %}
+
+
+{###### Router ##############}
 
 {% macro jw_renderElementFree(producerInfo) %}
 {% if  producerInfo.elementTypeName == "jwebform.element.XSRFProtectionType" %}
@@ -135,7 +140,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
 {{ jw_renderRadioType(producerInfo) }}
 {% else  %}
-{{ producerInfo.elementTypeName }}
+{{ producerInfo.elementTypeName }} not yet supported by this template
 {% endif %}
 
 
