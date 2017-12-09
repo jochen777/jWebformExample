@@ -63,6 +63,16 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endmacro %}
 
 
+{% macro renderSelectDateType(producerInfo) %}
+<div class="form-group">
+<label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}:</label>
+{% for piChild in producerInfo.childs %}
+{{ jw_renderElementFree(piChild) }}
+{% endfor %}
+</div>
+{% endmacro %}
+
+
 {% macro renderSelectType(producerInfo) %}
 <div class="form-group">
 <label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.oneValueElement.decoration.label }}:</label>
@@ -104,6 +114,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {{ renderCheckBoxType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.TextAreaType" %}
 {{ renderTextAreaType(producerInfo) }}
+{% elseif producerInfo.elementTypeName == "jwebform.element.SelectDateType" %}
+{{ renderSelectDateType(producerInfo) }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
 {{ renderTextType(producerInfo, "password") }}
 {% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
