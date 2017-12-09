@@ -45,7 +45,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% for radioEntry in producerInfo.element.entries %}
 <div class="radio">
 <label>
-  <input type="radio" name="{{ producerInfo.nameOfInput }}" id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}" value="{{ radioEntry.key}}" >
+  <input type="radio" name="{{ producerInfo.nameOfInput }}" id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}" 
+  value="{{ radioEntry.key}}" {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }}>
     {{ radioEntry.value}}</label>
 </div>
 {% endfor %}
