@@ -48,99 +48,123 @@
   tabindex="{{ producerInfo.tabIndex }}"
 {% endmacro %}
 
+{% macro js_nameAttribute(producerInfo) %}
+  name="{{ producerInfo.nameOfInput }}"
+{% endmacro %}
+
+{% macro js_ariaDescribedBy(name, helptext) %}
+  {% if helptext is not empty %}
+    aria-describedby="helpBlock-{{ name }}"
+  {% endif %}
+{% endmacro %}
+
 {###### Types ##############}
 
 {% macro jw_renderTextType(producerInfo, type) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <input class="form-control" {{ js_tabIndex(producerInfo) }} type="{{ type }}" 
-    name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}"
-    {{ js_requiredAttribute(producerInfo) }}
-    {{ js_maxLenAtrribute(producerInfo) }}
-    {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
-    aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
-    {% endif %} >
-    {{ jw_error(producerInfo) }}
-    {{ js_help( producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
+        {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
+        <input class="form-control" 
+          type="{{ type }}"
+          value="{{ producerInfo.elementResult.value }}"
+          {{ js_tabIndex(producerInfo) }}  
+          {{ js_nameAttribute(producerInfo) }} 
+          {{ js_requiredAttribute(producerInfo) }}
+          {{ js_maxLenAtrribute(producerInfo) }}
+          {{ js_ariaDescribedBy(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
+        >
+        {{ jw_error(producerInfo) }}
+        {{ js_help( producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
     </div>
 {% endmacro %}
 
 {% macro jw_renderTextAreaType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <textarea class="form-control" {{ js_tabIndex(producerInfo) }}  name="{{ producerInfo.nameOfInput }}" 
-    {{ js_requiredAttribute(producerInfo) }} 
-    {{ js_maxLenAtrribute(producerInfo) }}
-    {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
-    aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
-    {% endif %} >{{ producerInfo.elementResult.value }}</textarea>
-    {{ jw_error(producerInfo) }}
-    {{ js_help(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
+        {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
+        <textarea class="form-control" 
+          {{ js_tabIndex(producerInfo) }}  
+          {{ js_nameAttribute(producerInfo) }} 
+          {{ js_requiredAttribute(producerInfo) }} 
+          {{ js_maxLenAtrribute(producerInfo) }}
+          {{ js_ariaDescribedBy(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
+         >{{ producerInfo.elementResult.value }}</textarea>
+        {{ jw_error(producerInfo) }}
+        {{ js_help(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
     </div>
 {% endmacro %}
 
 {% macro jw_renderRadioType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    {% for radioEntry in producerInfo.element.entries %}
-    <div class="radio">
-    <label>
-      <input type="radio" name="{{ producerInfo.nameOfInput }}" id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}" 
-      value="{{ radioEntry.key}}" {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }} 
-      {{ js_requiredAttribute(producerInfo) }}
-      {{ js_tabIndex(producerInfo) }} 
-      >
-        {{ radioEntry.value}}</label>
-    </div>
-    {% endfor %}
-    {{ jw_error(producerInfo) }}
+        {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
+        {% for radioEntry in producerInfo.element.entries %}
+            <div class="radio">
+                <label>
+                  <input type="radio" 
+                    id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}"
+                    {{ js_nameAttribute(producerInfo) }}  
+                    value="{{ radioEntry.key}}" 
+                    {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }} 
+                    {{ js_requiredAttribute(producerInfo) }}
+                    {{ js_tabIndex(producerInfo) }} 
+                  >
+                  {{ radioEntry.value}}
+                </label>
+            </div>
+        {% endfor %}
+        {{ jw_error(producerInfo) }}
     </div>
 {% endmacro %}
 
 {% macro jw_renderTextDateType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
-    {% for piChild in producerInfo.childs %}
-    {{ jw_renderElementFree(piChild) }}
-    {% endfor %}
-    {{ jw_error(producerInfo) }}
+        {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
+        {% for piChild in producerInfo.childs %}
+          {{ jw_renderElementFree(piChild) }}
+        {% endfor %}
+        {{ jw_error(producerInfo) }}
     </div>
 {% endmacro %}
 
 
 {% macro jw_renderSelectDateType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
-    {% for piChild in producerInfo.childs %}
-    {{ jw_renderElementFree(piChild) }}
-    {% endfor %}
-    {{ jw_error(producerInfo) }}
+      {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
+      {% for piChild in producerInfo.childs %}
+        {{ jw_renderElementFree(piChild) }}
+      {% endfor %}
+      {{ jw_error(producerInfo) }}
     </div>
 {% endmacro %}
 
 
 {% macro jw_renderSelectType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <select class="form-control" {{ js_tabIndex(producerInfo) }}  name="{{ producerInfo.nameOfInput }}" 
-    {{ js_requiredAttribute(producerInfo) }}
-    aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
-    {% for selectElem in producerInfo.element.entries %}
-    <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
-    {% endfor %}
-    </select>
-    {{ jw_error(producerInfo) }}
+        {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
+        <select class="form-control" 
+          {{ js_tabIndex(producerInfo) }}
+          {{ js_nameAttribute(producerInfo) }} 
+          {{ js_requiredAttribute(producerInfo) }}
+          {{ js_ariaDescribedBy(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
+        >
+            {% for selectElem in producerInfo.element.entries %}
+              <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
+            {% endfor %}
+        </select>
+        {{ jw_error(producerInfo) }}
+        {{ js_help(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
     </div>
 {% endmacro %}
 
 {% macro jw_renderCheckBoxType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
-    {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
-    <input tabindex="{{ producerInfo.tabIndex }}" {{ js_tabIndex(producerInfo) }}  
-    type="checkbox" name="{{ producerInfo.nameOfInput }}" 
-    {{ js_requiredAttribute(producerInfo) }}
-    value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}" >
-    {{ js_help( producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
+      {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
+      <input type="checkbox" 
+        {{ js_tabIndex(producerInfo) }}  
+        {{ js_nameAttribute(producerInfo) }} 
+        {{ js_requiredAttribute(producerInfo) }}
+        {{ producerInfo.elementResult.valueObject?"checked":"" }} 
+        {{ js_ariaDescribedBy(producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
+      >
+      {{ js_help( producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
     </div>
 {% endmacro %}
 
