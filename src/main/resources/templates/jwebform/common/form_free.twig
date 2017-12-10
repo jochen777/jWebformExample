@@ -37,9 +37,12 @@
 {% endmacro %}
 
 {% macro js_requiredAttribute(producerInfo) %}
-{{ producerInfo.elementContainer.validator.isRequired?" required ":"" }}
+  {{ producerInfo.elementContainer.validator.isRequired?" required ":"" }}
 {% endmacro %}
 
+{% macro js_maxLenAtrribute(producerInfo) %}
+  {{ (producerInfo.elementContainer.validator.maxLen is not null?(' maxlength="'+producerInfo.elementContainer.validator.maxLen.maxLength+'"') | raw :"") }}
+{% endmacro %}
 
 {###### Types ##############}
 
@@ -49,6 +52,7 @@
     <input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" 
     name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}"
     {{ js_requiredAttribute(producerInfo) }}
+    {{ js_maxLenAtrribute(producerInfo) }}
     {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
     aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
     {% endif %} >
@@ -62,6 +66,7 @@
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
     <textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" 
     {{ js_requiredAttribute(producerInfo) }} 
+    {{ js_maxLenAtrribute(producerInfo) }}
     {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
     aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
     {% endif %} >{{ producerInfo.elementResult.value }}</textarea>

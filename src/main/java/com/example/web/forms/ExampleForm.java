@@ -37,7 +37,7 @@ public class ExampleForm {
             .of(new Validator());
     ElementContainer lastname =
         new TextType("lastname", new OneFieldDecoration("Your lastname", "help", "placeholder"), "")
-            .of(new Validator(Criteria.required()));
+            .of(new Validator(Criteria.required(), Criteria.maxLength(3)));
     ElementContainer number =
         new TextType("number", new OneFieldDecoration("Size", "help", "placeholder"), "")
             .of(new Validator(Criteria.number()));
