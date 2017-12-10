@@ -44,12 +44,16 @@
   {{ (producerInfo.elementContainer.validator.maxLen is not null?(' maxlength="'+producerInfo.elementContainer.validator.maxLen.maxLength+'"') | raw :"") }}
 {% endmacro %}
 
+{% macro js_tabIndex(producerInfo) %}
+  tabindex="{{ producerInfo.tabIndex }}"
+{% endmacro %}
+
 {###### Types ##############}
 
 {% macro jw_renderTextType(producerInfo, type) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" 
+    <input class="form-control" {{ js_tabIndex(producerInfo) }} type="{{ type }}" 
     name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}"
     {{ js_requiredAttribute(producerInfo) }}
     {{ js_maxLenAtrribute(producerInfo) }}
@@ -64,7 +68,7 @@
 {% macro jw_renderTextAreaType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" 
+    <textarea class="form-control" {{ js_tabIndex(producerInfo) }}  name="{{ producerInfo.nameOfInput }}" 
     {{ js_requiredAttribute(producerInfo) }} 
     {{ js_maxLenAtrribute(producerInfo) }}
     {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
@@ -82,7 +86,10 @@
     <div class="radio">
     <label>
       <input type="radio" name="{{ producerInfo.nameOfInput }}" id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}" 
-      value="{{ radioEntry.key}}" {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }} {{ js_requiredAttribute(producerInfo) }}>
+      value="{{ radioEntry.key}}" {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }} 
+      {{ js_requiredAttribute(producerInfo) }}
+      {{ js_tabIndex(producerInfo) }} 
+      >
         {{ radioEntry.value}}</label>
     </div>
     {% endfor %}
@@ -115,7 +122,7 @@
 {% macro jw_renderSelectType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <select class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" 
+    <select class="form-control" {{ js_tabIndex(producerInfo) }}  name="{{ producerInfo.nameOfInput }}" 
     {{ js_requiredAttribute(producerInfo) }}
     aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
     {% for selectElem in producerInfo.element.entries %}
@@ -129,10 +136,10 @@
 {% macro jw_renderCheckBoxType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
-    <input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" 
+    <input tabindex="{{ producerInfo.tabIndex }}" {{ js_tabIndex(producerInfo) }}  
+    type="checkbox" name="{{ producerInfo.nameOfInput }}" 
     {{ js_requiredAttribute(producerInfo) }}
-    value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
-    {{ js_help(producerInfo) }}
+    value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}" >
     {{ js_help( producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
     </div>
 {% endmacro %}
