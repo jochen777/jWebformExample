@@ -36,13 +36,19 @@
     {% endif %}
 {% endmacro %}
 
+{% macro js_requiredAttribute(producerInfo) %}
+{{ producerInfo.elementContainer.validator.isRequired?" required ":"" }}
+{% endmacro %}
+
 
 {###### Types ##############}
 
 {% macro jw_renderTextType(producerInfo, type) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}" 
+    <input class="form-control" tabindex="{{ producerInfo.tabIndex }}" type="{{ type }}" 
+    name="{{ producerInfo.nameOfInput }}" value="{{ producerInfo.elementResult.value }}"
+    {{ js_requiredAttribute(producerInfo) }}
     {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
     aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
     {% endif %} >
@@ -54,7 +60,8 @@
 {% macro jw_renderTextAreaType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}"  
+    <textarea class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" 
+    {{ js_requiredAttribute(producerInfo) }} 
     {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
     aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
     {% endif %} >{{ producerInfo.elementResult.value }}</textarea>
@@ -70,7 +77,7 @@
     <div class="radio">
     <label>
       <input type="radio" name="{{ producerInfo.nameOfInput }}" id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}" 
-      value="{{ radioEntry.key}}" {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }}>
+      value="{{ radioEntry.key}}" {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }} {{ js_requiredAttribute(producerInfo) }}>
         {{ radioEntry.value}}</label>
     </div>
     {% endfor %}
@@ -103,7 +110,9 @@
 {% macro jw_renderSelectType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.oneValueElement.decoration.label, producerInfo) }}
-    <select class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
+    <select class="form-control" tabindex="{{ producerInfo.tabIndex }}" name="{{ producerInfo.nameOfInput }}" 
+    {{ js_requiredAttribute(producerInfo) }}
+    aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
     {% for selectElem in producerInfo.element.entries %}
     <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
     {% endfor %}
@@ -115,7 +124,9 @@
 {% macro jw_renderCheckBoxType(producerInfo) %}
     {{ jw_startingDiv(producerInfo) }}
     {{ jw_label(producerInfo.element.decoration.label, producerInfo) }}
-    <input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
+    <input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" 
+    {{ js_requiredAttribute(producerInfo) }}
+    value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
     {{ js_help(producerInfo) }}
     {{ js_help( producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
     </div>
