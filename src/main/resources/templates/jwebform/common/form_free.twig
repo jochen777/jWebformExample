@@ -30,6 +30,13 @@
 {% endif %}
 {% endmacro %}
 
+{% macro js_help(name, helptext) %}
+{% if helptext is not empty %}
+<span id="helpBlock-{{ name }}" class="help-block">{{ helptext }}</span>
+{% endif %}
+{% endmacro %}
+
+
 {###### Types ##############}
 
 {% macro jw_renderTextType(producerInfo, type) %}
@@ -39,10 +46,8 @@
 {% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endif %} >
-{% if producerInfo.element.oneValueElement.decoration.helptext is not empty %}
-<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.oneValueElement.decoration.helptext }}</span>
-{% endif %}
 {{ jw_error(producerInfo) }}
+{{ js_help( producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
 </div>
 {% endmacro %}
 
@@ -54,6 +59,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% endif %} >{{ producerInfo.elementResult.value }}</textarea>
 {{ jw_error(producerInfo) }}
+{{ js_help(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
 </div>
 {% endmacro %}
 
@@ -68,6 +74,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
     {{ radioEntry.value}}</label>
 </div>
 {% endfor %}
+{{ jw_error(producerInfo) }}
 </div>
 {% endmacro %}
 
@@ -77,6 +84,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% for piChild in producerInfo.childs %}
 {{ jw_renderElementFree(piChild) }}
 {% endfor %}
+{{ jw_error(producerInfo) }}
 </div>
 {% endmacro %}
 
@@ -87,6 +95,7 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {% for piChild in producerInfo.childs %}
 {{ jw_renderElementFree(piChild) }}
 {% endfor %}
+{{ jw_error(producerInfo) }}
 </div>
 {% endmacro %}
 
@@ -107,9 +116,8 @@ aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
 {{ jw_startingDiv(producerInfo) }}
 {{ jw_label(producerInfo.nameOfInput, producerInfo.element.decoration.label) }}
 <input tabindex="{{ producerInfo.tabIndex }}" type="checkbox" name="{{ producerInfo.nameOfInput }}" value="" {{ producerInfo.elementResult.valueObject?"checked":"" }} aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}">
-{% if producerInfo.element.decoration.helptext is not empty %}
-<span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.decoration.helptext }}</span>
-{% endif %}
+{{ js_help(producerInfo) }}
+{{ js_help( producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
 </div>
 {% endmacro %}
 
