@@ -10,9 +10,6 @@
   {{ form.startEnd.end | raw }}
 {% endmacro %}
 
-{% macro jw_renderSubmit(element) %}
-  <input tabindex="{{ element.tabIndex }}" type="submit" value="Save">
-{% endmacro %}
 
 {% macro jw_startingDiv(producerInfo) %}
     <div class="form-group {{ producerInfo.elementResult.validationResult.isSuccess? "has-success":
@@ -58,6 +55,13 @@
   {% endif %}
 {% endmacro %}
 
+{% macro js_placeholder(producerInfo) %}
+  {% if producerInfo.element.oneValueElement.decoration.placeholder is not empty %}
+    placeholder="{{ producerInfo.element.oneValueElement.decoration.placeholder }}"
+  {% endif %}
+{% endmacro %}
+
+
 {###### Types ##############}
 
 {% macro jw_renderTextType(producerInfo, type) %}
@@ -70,6 +74,7 @@
           {{ js_nameAttribute(producerInfo) }} 
           {{ js_requiredAttribute(producerInfo) }}
           {{ js_maxLenAtrribute(producerInfo) }}
+          {{ js_placeholder(producerInfo) }}
           {{ js_ariaDescribedBy(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
         >
         {{ jw_error(producerInfo) }}
@@ -85,6 +90,7 @@
           {{ js_nameAttribute(producerInfo) }} 
           {{ js_requiredAttribute(producerInfo) }} 
           {{ js_maxLenAtrribute(producerInfo) }}
+          {{ js_placeholder(producerInfo) }}
           {{ js_ariaDescribedBy(producerInfo.nameOfInput, producerInfo.element.oneValueElement.decoration.helptext) }}
          >{{ producerInfo.elementResult.value }}</textarea>
         {{ jw_error(producerInfo) }}
@@ -166,6 +172,10 @@
       >
       {{ js_help( producerInfo.nameOfInput, producerInfo.element.decoration.helptext) }}
     </div>
+{% endmacro %}
+
+{% macro jw_renderSubmit(element) %}
+  <input tabindex="{{ element.tabIndex }}" type="submit" value="{{ element.element.label }}">
 {% endmacro %}
 
 
