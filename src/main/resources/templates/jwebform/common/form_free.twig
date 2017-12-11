@@ -2,7 +2,7 @@
 
 {# todo don't use theme here! #}
 {% macro jw_renderStart(form) %}
-  {{ form.startEnd.start | raw }}
+  {{ form.startEnd.start("jochen") | raw }}
 {% endmacro %}
 
 {# todo don't use theme here! #}
@@ -175,7 +175,7 @@
 {% endmacro %}
 
 {% macro jw_renderSubmit(element) %}
-  <input tabindex="{{ element.tabIndex }}" type="submit" value="{{ element.element.label }}">
+  <input tabindex="{{ element.tabIndex }}" name="{{ element.element.name }}" type="submit" value="{{ element.element.label }}">
 {% endmacro %}
 
 
