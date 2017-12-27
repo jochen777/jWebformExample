@@ -18,8 +18,8 @@ import jwebform.element.TextAreaType;
 import jwebform.element.TextDateType;
 import jwebform.element.TextType;
 import jwebform.element.XSRFProtectionType;
+import jwebform.element.structure.Decoration;
 import jwebform.element.structure.ElementContainer;
-import jwebform.element.structure.OneFieldDecoration;
 import jwebform.validation.FormValidator;
 import jwebform.validation.ValidationResult;
 import jwebform.validation.Validator;
@@ -33,38 +33,38 @@ public class ExampleForm {
     XSRFProtectionType xsrfProtection = new XSRFProtectionType();
 
     ElementContainer firstname =
-        new TextType("firstname", new OneFieldDecoration("Your firstname", "hilfe zum Vorname", ""), "Jochen")
+        new TextType("firstname", new Decoration("Your firstname", "hilfe zum Vorname", ""), "Jochen")
             .of(new Validator());
     ElementContainer lastname =
-        new TextType("lastname", new OneFieldDecoration("Your lastname", "help", "placeholder"), "")
+        new TextType("lastname", new Decoration("Your lastname", "help", "placeholder"), "")
             .of(new Validator(Criteria.required(), Criteria.maxLength(3)));
     ElementContainer number =
-        new TextType("number", new OneFieldDecoration("Size", "help", "placeholder"), "")
+        new TextType("number", new Decoration("Size", "help", "placeholder"), "")
             .of(new Validator(Criteria.number()));
     ElementContainer birthday = new TextDateType("birthday",
-        new OneFieldDecoration("Birhtday", "Please insert your birhtday", "placeholder"),
+        new Decoration("Birhtday", "Please insert your birhtday", "placeholder"),
         LocalDate.now()).of(new Validator());
-    ElementContainer gender = new SelectType("gender", new OneFieldDecoration("Gender", "help", ""),
+    ElementContainer gender = new SelectType("gender", new Decoration("Gender", "help", ""),
         "", new String[] {"m", "f"}, new String[] {"Male", "Female"}).of();
 
     ElementContainer optin =
-        new CheckBoxType("optin", new OneFieldDecoration("Optin", "help", "placeholder"), true)
+        new CheckBoxType("optin", new Decoration("Optin", "help", "placeholder"), true)
             .of();
 
-    ElementContainer textArea = new TextAreaType("area", new OneFieldDecoration("Area"), "").of();
+    ElementContainer textArea = new TextAreaType("area", new Decoration("Area"), "").of();
 
     ElementContainer number2 =
-        new NumberType("number2", new OneFieldDecoration("Number", "help", "placeholder"), 5).of();
+        new NumberType("number2", new Decoration("Number", "help", "placeholder"), 5).of();
 
     ElementContainer password =
-        new PasswordType("pwd", new OneFieldDecoration("Passwoid", "help", "placeholder")).of();
+        new PasswordType("pwd", new Decoration("Passwoid", "help", "placeholder")).of();
 
-    ElementContainer radio = new RadioType("radio", new OneFieldDecoration("Radio", "help", ""), "",
+    ElementContainer radio = new RadioType("radio", new Decoration("Radio", "help", ""), "",
         new String[] {"m", "f"}, new String[] {"Male", "Female"})
             .of(new Validator(Criteria.required()));
 
     ElementContainer checkoutDate = new SelectDateType("checkoutDate",
-        new OneFieldDecoration("Checkout Date"), LocalDate.now(), 2020, 2015).of();
+        new Decoration("Checkout Date"), LocalDate.now(), 2020, 2015).of();
 
     ElementContainer submit = new SubmitType("Save").of();
 

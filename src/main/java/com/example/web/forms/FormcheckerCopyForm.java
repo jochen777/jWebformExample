@@ -5,7 +5,7 @@ import java.util.List;
 
 import jwebform.Form;
 import jwebform.element.TextType;
-import jwebform.element.structure.OneFieldDecoration;
+import jwebform.element.structure.Decoration;
 import jwebform.validation.FormValidator;
 import jwebform.validation.Validator;
 import jwebform.validation.criteria.Criteria;
@@ -14,8 +14,8 @@ public class FormcheckerCopyForm {
 
   public static Form build(String id) {
     return new Form(id, buildFormValidator(),
-        new TextType("textInput", new OneFieldDecoration("SampleTextInput"), "Peter").of(),
-        new TextType("firstname", new OneFieldDecoration("Your Firstname", "Andreas"), "Peter")
+        new TextType("textInput", new Decoration("SampleTextInput"), "Peter").of(),
+        new TextType("firstname", new Decoration("Your Firstname", "Andreas"), "Peter")
             .of(new Validator(Criteria.required(), Criteria.accept("Peter", "Max"),
                 Criteria.maxLength(10))));
 
