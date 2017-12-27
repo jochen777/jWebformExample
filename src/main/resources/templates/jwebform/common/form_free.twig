@@ -2,7 +2,7 @@
 
 {# todo don't use theme here! #}
 {% macro jw_renderStart(form) %}
-  {{ form.startEnd.start | raw }}
+  {{ form.startEnd.start("jochen") | raw }}
 {% endmacro %}
 
 {# todo don't use theme here! #}
@@ -175,7 +175,7 @@
 {% endmacro %}
 
 {% macro jw_renderSubmit(element) %}
-  <input tabindex="{{ element.tabIndex }}" type="submit" value="{{ element.element.label }}">
+  <input tabindex="{{ element.tabIndex }}" name="{{ element.element.name }}" type="submit" value="{{ element.element.label }}">
 {% endmacro %}
 
 
@@ -186,6 +186,8 @@
     {{ producerInfo.html | raw }}
     {% elseif producerInfo.elementTypeName == "jwebform.element.TextType" %}
     {{ jw_renderTextType(producerInfo, "text") }}
+    {% elseif producerInfo.elementTypeName == "jwebform.element.HtmlType" %}
+    {{ producerInfo.html | raw }}
     {% elseif producerInfo.elementTypeName == "jwebform.element.SubmitType" %}
     {{ jw_renderSubmit(producerInfo) }}
     {% elseif producerInfo.elementTypeName == "jwebform.element.NumberType" %}
@@ -200,6 +202,8 @@
     {{ jw_renderTextAreaType(producerInfo) }}
     {% elseif producerInfo.elementTypeName == "jwebform.element.SelectDateType" %}
     {{ jw_renderSelectDateType(producerInfo) }}
+    {% elseif producerInfo.elementTypeName == "jwebform.element.UploadType" %}
+    {{ jw_renderUploadype(producerInfo) }}
     {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
     {{ jw_renderTextType(producerInfo, "password") }}
     {% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
