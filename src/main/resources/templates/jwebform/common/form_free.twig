@@ -181,7 +181,7 @@
 {% macro jw_renderFormFree(form, overrides) %}
     {{ jw_renderStart(form, overrides["form_class"]) }}
     {% for producerInfo in form.unrenderedElements %}
-    {{ jw_renderElementFree(producerInfo, overrides) }}
+        {{ jw_renderElementFree(producerInfo, overrides) }}
     {% endfor %}
     {{ jw_renderEnd(form) }}
 {% endmacro %}
