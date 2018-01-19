@@ -1,1 +1,9 @@
 <h1>{{producerInfos.elementTypeName}}</h1>
+{{>jwebform/common/elements/widgets/startingDiv}}
+{{>jwebform/common/elements/widgets/label}}
+        <input 
+          {{>jwebform/common/elements/widgets/inputClass}}
+          type="text"
+          value="{{ producerInfos.elementResult.value }}"
+          {{>jwebform/common/elements/widgets/tabIndex }}
+>
