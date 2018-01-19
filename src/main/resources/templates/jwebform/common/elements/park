@@ -1,0 +1,11 @@
+{{!
+          {{ js_maxLenAtrribute(producerInfo) }}
+          {{ js_placeholder(producerInfo) }}
+          {{ js_ariaDescribedBy(producerInfo) }}
+        >
+        {{ jw_error(producerInfo) }}
+        {{ js_help( producerInfo) }}
+    </div>
+{% endmacro %}
+
+}}
