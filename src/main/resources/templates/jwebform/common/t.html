@@ -1,8 +1,17 @@
 {{>jwebform/common/start}}
 {{ #drawableElements }}
 {{producerInfos.elementTypeName}}<br>
+{{#elementNameInfo.XSRFProtectionType}}
+{{{ producerInfos.html }}}
+{{/elementNameInfo.XSRFProtectionType}}
 {{#elementNameInfo.TextType}}
 {{>jwebform/common/elements/text_type}}
 {{/elementNameInfo.TextType}}
+{{#elementNameInfo.NumberType}}
+{{>jwebform/common/elements/text_type}}
+{{/elementNameInfo.NumberType}}
+{{#elementNameInfo.PasswordType}}
+{{>jwebform/common/elements/text_type}}
+{{/elementNameInfo.PasswordType}}
 {{ /drawableElements }}
 {{>jwebform/common/end}}

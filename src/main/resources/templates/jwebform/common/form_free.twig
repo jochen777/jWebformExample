@@ -239,6 +239,7 @@
             {{ jw_renderTextType(producerInfo, "password") }}
         {% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
             {{ jw_renderRadioType(producerInfo) }}
+         {# Missing hidden!! #}
         {% else  %}
             {{ renderIndividual(producerInfo) }}
         {% endif %}
