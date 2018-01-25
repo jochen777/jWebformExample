@@ -59,8 +59,8 @@ public class ExampleForm {
     ElementContainer password =
         new PasswordType("pwd", new Decoration("Passwoid", "help", "placeholder")).of();
 
-    ElementContainer radio = new RadioType("radio", new Decoration("Radio", "help", ""), "",
-        new String[] {"m", "f"}, new String[] {"Male", "Female"})
+    ElementContainer radio = new RadioType("radio", new Decoration("Your Prefix", "help", ""), "",
+        new String[] {"m", "f"}, new String[] {"Mr", "Misses"})
             .of(new Validator(Criteria.required()));
 
     ElementContainer checkoutDate = new SelectDateType("checkoutDate",

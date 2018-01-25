@@ -1,14 +1,10 @@
 {{>jwebform/common/elements/widgets/startingDiv}}
 {{>jwebform/common/elements/widgets/label}}
-        <input 
-          {{>jwebform/common/elements/widgets/inputClass}}
-          type="{{ elementNameInfo.type }}"
-          value="{{ producerInfos.elementResult.value }}"
+        <input type="checkbox"
           {{>jwebform/common/elements/widgets/tabIndex}}
           {{>jwebform/common/elements/widgets/nameAttribute }}
           {{>jwebform/common/elements/widgets/requiredAttribute }}
-          {{>jwebform/common/elements/widgets/maxLenAtrribute }}
-          {{>jwebform/common/elements/widgets/placeholder }}
+          {{^producerInfo.elementResult.valueObject }}checked{{/producerInfo.elementResult.valueObject}}
           {{>jwebform/common/elements/widgets/ariaDescribedBy }}
 >
 {{>jwebform/common/elements/widgets/error}}

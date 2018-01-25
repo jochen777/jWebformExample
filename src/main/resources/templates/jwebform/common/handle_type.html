@@ -1,6 +1,3 @@
-{{>jwebform/common/start}}
-{{ #drawableElements }}
-{{producerInfos.elementTypeName}}<br>
 
 {{#elementNameInfo.XSRFProtectionType}}
 {{{ producerInfos.html }}}
@@ -30,15 +27,19 @@
 {{>jwebform/common/elements/select_type}}
 {{/elementNameInfo.SelectType}}
 
+{{#elementNameInfo.RadioType}}
+{{>jwebform/common/elements/radio_type}}
+{{/elementNameInfo.RadioType}}
 
-{{ /drawableElements }}
-{{>jwebform/common/end}}
+{{#elementNameInfo.CheckBoxType}}
+{{>jwebform/common/elements/checkbox_type}}
+{{/elementNameInfo.CheckBoxType}}
 
+{{#elementNameInfo.TextDateType}}
+{{>jwebform/common/elements/textdate_type}}
+{{/elementNameInfo.TextDateType}}
 
+{{#elementNameInfo.SelectDateType}}
+{{>jwebform/common/elements/textdate_type}}
+{{/elementNameInfo.SelectDateType}}
 
-
-RadioType
-
-TextDateType
-CheckBoxType
-SelectDateType
