@@ -34,7 +34,7 @@
 {% endmacro %}
 
 {% macro js_maxLenAtrribute(producerInfo) %}
-  {{ (producerInfo.elementContainer.validator.maxLen is not null?(' maxlength="'+producerInfo.elementContainer.validator.maxLen.maxLength+'"') | raw :"") }}
+  {{ (producerInfo.elementContainer.validator.maxLen.present ?(' maxlength="'+producerInfo.elementContainer.validator.maxLen.get.maxLength+'"') | raw :"") }}
 {% endmacro %}
 
 {% macro js_tabIndex(producerInfo) %}
