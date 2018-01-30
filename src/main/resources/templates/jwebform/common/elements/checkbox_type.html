@@ -4,7 +4,7 @@
           {{>jwebform/common/elements/widgets/tabIndex}}
           {{>jwebform/common/elements/widgets/nameAttribute }}
           {{>jwebform/common/elements/widgets/requiredAttribute }}
-          {{^producerInfo.elementResult.valueObject }}checked{{/producerInfo.elementResult.valueObject}}
+          {{#producerInfos.elementResult.valueObject }}checked{{/producerInfos.elementResult.valueObject}}
           {{>jwebform/common/elements/widgets/ariaDescribedBy }}
 >
 {{>jwebform/common/elements/widgets/error}}
