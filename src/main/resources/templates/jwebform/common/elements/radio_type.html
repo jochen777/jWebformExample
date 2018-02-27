@@ -8,7 +8,7 @@
                     id="form-radio-{{ producerInfos.nameOfInput }}-{{ key}}"
                     {{>jwebform/common/elements/widgets/nameAttribute }}  
                     value="{{ key}}" 
-										{{ ^checked }}checked{{/checked}}  
+										{{ #selected }}checked{{/selected}}  
 										{{>jwebform/common/elements/widgets/requiredAttribute }}
 										{{>jwebform/common/elements/widgets/tabIndex}}
  

@@ -8,7 +8,7 @@
           {{>jwebform/common/elements/widgets/ariaDescribedBy }}
           >
           {{ #elementNameInfo.selected }}
-              <option value="{{ key }}" {{^selcted}}SELECTED{{/selcted}}>{{ value }}</option>
+              <option value="{{ key }}" {{#selcted}}SELECTED{{/selcted}}>{{ value }}</option>
           {{ /elementNameInfo.selected }}
         </select>
 {{>jwebform/common/elements/widgets/error}}

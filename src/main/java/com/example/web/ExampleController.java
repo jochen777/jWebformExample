@@ -71,7 +71,7 @@ public class ExampleController {
         new RequestEnvBuilder().of(request));
     model.addAttribute("form", formResult.getView());
     if (formResult.isOk()) {
-      System.err.println("Everything is fined!");
+      model.addAttribute("ok", true);
     }
     // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
     // model.addAttribute("form2", formResult2.getView().getHtml(theme));

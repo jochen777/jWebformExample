@@ -11,7 +11,6 @@ import jwebform.element.CheckBoxType;
 import jwebform.element.NumberType;
 import jwebform.element.PasswordType;
 import jwebform.element.RadioType;
-import jwebform.element.SelectDateType;
 import jwebform.element.SelectType;
 import jwebform.element.SubmitType;
 import jwebform.element.TextAreaType;
@@ -36,10 +35,10 @@ public class ExampleForm {
         new TextType("firstname", new Decoration("Your firstname", "hilfe zum Vorname", ""), "Jochen")
             .of(new Validator());
     ElementContainer lastname =
-        new TextType("lastname", new Decoration("Your lastname", "help", "placeholder"), "")
+        new TextType("lastname", new Decoration("Your lastname", "help", "placeholder"), "pie")
             .of(new Validator(Criteria.required(), Criteria.maxLength(3)));
     ElementContainer number =
-        new TextType("number", new Decoration("Size", "help", "placeholder"), "")
+        new TextType("number", new Decoration("Size", "help", "placeholder"), "2")
             .of(new Validator(Criteria.number()));
     ElementContainer birthday = new TextDateType("birthday",
         new Decoration("Birhtday", "Please insert your birhtday", "placeholder"),
@@ -63,8 +62,9 @@ public class ExampleForm {
         new String[] {"m", "f"}, new String[] {"Mr", "Misses"})
             .of(new Validator(Criteria.required()));
 
-    ElementContainer checkoutDate = new SelectDateType("checkoutDate",
-        new Decoration("Checkout Date"), LocalDate.now(), 2020, 2015).of();
+    // ElementContainer checkoutDate = new SelectDateType("checkoutDate",
+    // new Decoration("Checkout Date"), LocalDate.now(), 2020, 2015).of();
+
 
     ElementContainer submit = new SubmitType("Save").of();
 
@@ -80,7 +80,7 @@ public class ExampleForm {
     elements.add(textArea);
     elements.add(number2);
     elements.add(password);
-    elements.add(checkoutDate);
+    // elements.add(checkoutDate);
     elements.add(submit);
     formValidators.add(it -> {
       final Map<ElementContainer, ValidationResult> overridenValidationResults = new HashMap<>();
