@@ -12,8 +12,8 @@
 
 
 {% macro jw_label(producerInfo) %}
-{% if producerInfo.element.decoration.label is not empty %}
-  <label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.element.decoration.label }}: {{ producerInfo.elementContainer.validator.isRequired?"*":"" }}</label>
+{% if producerInfo.elementContainer.decoration.label is not empty %}
+  <label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.elementContainer.decoration.label }}: {{ producerInfo.elementContainer.validator.isRequired?"*":"" }}</label>
 {% endif %}
 {% endmacro %}
 
@@ -24,8 +24,8 @@
 {% endmacro %}
 
 {% macro js_help(producerInfo) %}
-    {% if producerInfo.element.decoration.helptext is not empty %}
-    <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.element.decoration.helptext }}</span>
+    {% if producerInfo.elementContainer.decoration.helptext is not empty %}
+    <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.elementContainer.decoration.helptext }}</span>
     {% endif %}
 {% endmacro %}
 
@@ -46,15 +46,15 @@
 {% endmacro %}
 
 {% macro js_ariaDescribedBy(producerInfo) %}
-  {% if producerInfo.element.decoration.helptext is not empty %}
+  {% if producerInfo.elementContainer.decoration.helptext is not empty %}
     aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
   {% endif %}
 {% endmacro %}
 
 
 {% macro js_placeholder(producerInfo) %}
-  {% if producerInfo.element.decoration.placeholder is not empty %}
-    placeholder="{{ producerInfo.element.decoration.placeholder }}"
+  {% if producerInfo.elementContainer.decoration.placeholder is not empty %}
+    placeholder="{{ producerInfo.elementContainer.decoration.placeholder }}"
   {% endif %}
 {% endmacro %}
 
