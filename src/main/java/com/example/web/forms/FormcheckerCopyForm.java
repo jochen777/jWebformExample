@@ -14,10 +14,10 @@ public class FormcheckerCopyForm {
 
   public static Form build(String id) {
     return new Form(id, buildFormValidator(),
-        new TextType("textInput", new Decoration("SampleTextInput"), "Peter").of(),
-        new TextType("firstname", new Decoration("Your Firstname", "Andreas"), "Peter")
+        new TextType("textInput", "Peter").of(new Decoration("SampleTextInput")),
+        new TextType("firstname", "Peter")
             .of(new Validator(Criteria.required(), Criteria.accept("Peter", "Max"),
-                Criteria.maxLength(10))));
+                Criteria.maxLength(10)), new Decoration("Your Firstname", "Andreas")));
 
 
     /*
