@@ -60,7 +60,7 @@
 
 		<dependency>
 			<groupId>de.cyclon-softworx</groupId>
-			<artifactId>jwebform</artifactId>
+			<artifactId>jwebform-themes</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

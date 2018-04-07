@@ -1,20 +1,19 @@
 package com.example.web;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.example.jwebform_integration.RequestEnvBuilder;
 import com.example.web.forms.ExampleForm;
 import com.example.web.forms.FormcheckerCopyForm;
-
 import jwebform.FormResult;
-import jwebform.view.Theme;
-import jwebform.view.theme.BootstrapTheme;
+import jwebform.themes.common.StartEndRenderer;
+import jwebform.themes.mustache.ThemeMustacheRenderer;
+import jwebform.themes.sourcecode.ThemeJavaRenderer;
+import jwebform.themes.sourcecode.mapper.StandardMapper;
 
 @Controller
 public class ExampleController {
@@ -25,9 +24,12 @@ public class ExampleController {
 
   @RequestMapping("/example")
   public String example(Model model, HttpServletRequest request) {
-    Theme theme = BootstrapTheme.instance(msg -> msg);
     FormResult formResult = ExampleForm.build("id").run(new RequestEnvBuilder().of(request));
-    model.addAttribute("form", formResult.getView(theme).getHtml("GET", true));
+    ThemeJavaRenderer renderer = new ThemeJavaRenderer(formResult, ThemeMustacheRenderer.BOOTSTRAP,
+        new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)),
+        jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg));
+
+    model.addAttribute("form", renderer.render("POST", true, msg -> msg));
     model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
@@ -45,10 +47,12 @@ public class ExampleController {
 
   @RequestMapping("/boostrap")
   public String bootstrap(Model model, HttpServletRequest request) {
-    BootstrapTheme theme = BootstrapTheme.instance(msg -> msg);
     FormResult formResult =
         FormcheckerCopyForm.build("example").run(new RequestEnvBuilder().of(request));
-    model.addAttribute("form", formResult.getView(theme).getHtml("GET", true));
+    ThemeJavaRenderer renderer = new ThemeJavaRenderer(formResult, ThemeMustacheRenderer.BOOTSTRAP,
+        new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)),
+        jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg));
+    model.addAttribute("form", renderer.render("GET", true, msg -> msg));
     model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
@@ -66,10 +70,10 @@ public class ExampleController {
 
   @RequestMapping("/bootstrap2")
   public String bootstrap2(Model model, HttpServletRequest request) {
-    BootstrapTheme theme = BootstrapTheme.instance(msg -> msg);
-    FormResult formResult = ExampleForm.build("example").run(
-        new RequestEnvBuilder().of(request));
+    FormResult formResult = ExampleForm.build("example").run(new RequestEnvBuilder().of(request));
+    StartEndRenderer renderer = new StartEndRenderer(formResult, "GET", true);
     model.addAttribute("form", formResult.getView());
+    model.addAttribute("startEnd", renderer);
     if (formResult.isOk()) {
       model.addAttribute("ok", true);
     }
