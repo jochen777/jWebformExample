@@ -2,7 +2,6 @@ package com.example.web.forms;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jwebform.Form;
 import jwebform.element.TextType;
 import jwebform.element.structure.Decoration;
@@ -12,12 +11,12 @@ import jwebform.validation.criteria.Criteria;
 
 public class FormcheckerCopyForm {
 
-  public static Form build(String id) {
-    return new Form(id, buildFormValidator(),
+  public static Form build() {
+    return new Form("id", buildFormValidator(),
         new TextType("textInput", "Peter").of(new Decoration("SampleTextInput")),
-        new TextType("firstname", "Peter")
-            .of(new Validator(Criteria.required(), Criteria.accept("Peter", "Max"),
-                Criteria.maxLength(10)), new Decoration("Your Firstname", "Andreas")));
+        new TextType("firstname", "Peter").of(new Validator(Criteria.required(),
+            Criteria.accept("Peter", "Max"), Criteria.maxLength(10)),
+            new Decoration("Your Firstname", "Andreas")));
 
 
     /*

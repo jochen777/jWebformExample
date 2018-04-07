@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import jwebform.Form;
 import jwebform.element.CheckBoxType;
 import jwebform.element.NumberType;
@@ -26,24 +25,21 @@ import jwebform.validation.criteria.Criteria;
 
 public class ExampleForm {
 
-  public static Form build(String id) {
+  public static Form build() {
+    String id = "id";
     List<FormValidator> formValidators = new ArrayList<>();
 
     XSRFProtectionType xsrfProtection = new XSRFProtectionType();
 
-    ElementContainer firstname =
-        new TextType("firstname", "Jochen").of(new Validator(),
-            new Decoration("Your firstname", "hilfe zum Vorname", ""));
-    ElementContainer lastname =
-        new TextType("lastname", "pie").of(
-            new Validator(Criteria.required(), Criteria.maxLength(3)),
-            new Decoration("Your lastname", "help", "placeholder"));
-    ElementContainer number =
-        new TextType("number", "2").of(new Validator(Criteria.number()),
-            new Decoration("Size", "help", "placeholder"));
-    ElementContainer birthday = new SelectDateType("birthday",
-        LocalDate.now(), 2018, 2020).of(new Validator(),
-            new Decoration("Birhtday", "Please insert your birhtday", "placeholder"));
+    ElementContainer firstname = new TextType("firstname", "Jochen").of(new Validator(),
+        new Decoration("Your firstname", "hilfe zum Vorname", ""));
+    ElementContainer lastname = new TextType("lastname", "pie").of(
+        new Validator(Criteria.required(), Criteria.maxLength(3)),
+        new Decoration("Your lastname", "help", "placeholder"));
+    ElementContainer number = new TextType("number", "2").of(new Validator(Criteria.number()),
+        new Decoration("Size", "help", "placeholder"));
+    ElementContainer birthday = new SelectDateType("birthday", LocalDate.now(), 2018, 2020).of(
+        new Validator(), new Decoration("Birhtday", "Please insert your birhtday", "placeholder"));
     ElementContainer gender =
         new SelectType("gender", "", new String[] {"m", "f"}, new String[] {"Male", "Female"})
             .of(new Decoration("Gender", "help", ""));
@@ -59,8 +55,8 @@ public class ExampleForm {
     ElementContainer password =
         new PasswordType("pwd").of(new Decoration("Passwoid", "help", "placeholder"));
 
-    ElementContainer radio = new RadioType("radio", "",
-        new String[] {"m", "f"}, new String[] {"Mr", "Misses"})
+    ElementContainer radio =
+        new RadioType("radio", "", new String[] {"m", "f"}, new String[] {"Mr", "Misses"})
             .of(new Validator(Criteria.required()), new Decoration("Your Prefix", "help", ""));
 
     // ElementContainer checkoutDate = new SelectDateType("checkoutDate",
