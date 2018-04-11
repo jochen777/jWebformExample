@@ -13,7 +13,6 @@ import com.example.web.forms.ExampleForm;
 import com.example.web.forms.FormcheckerCopyForm;
 
 import jwebform.FormResult;
-import jwebform.themes.common.StartEndRenderer;
 import jwebform.themes.sourcecode.ThemeJavaRenderer;
 import jwebform.themes.sourcecode.mapper.StandardMapper;
 
@@ -26,9 +25,7 @@ public class ExampleController {
   @RequestMapping("/bootstrap2")
   public String bootstrap2(Model model, HttpServletRequest request) {
     FormResult formResult = ExampleForm.build().run(new RequestEnvBuilder().of(request));
-    StartEndRenderer renderer = new StartEndRenderer(formResult, "GET", true);
     model.addAttribute("form", formResult.getView("GET", false));
-    model.addAttribute("startEnd", renderer);
     if (formResult.isOk()) {
       model.addAttribute("ok", true);
     }
