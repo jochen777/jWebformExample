@@ -1,1 +1,4 @@
-{{{ startEnd.start }}}
+<form name="{{ form.formId }}-FORMCHECKER" method="{{ form.method }}" 
+{{ #form.isUploadEnctypeRequired }} enctype="multipart/form-data" {{/form.isUploadEnctypeRequired }}
+{{ #form.isHtml5Validaiton }}novalidate{{/form.isHtml5Validaiton }} id="{{ form.formId }}">
+    <input type="hidden" name="WF_SUBMITTED" value="WF-{{ form.formId }}">

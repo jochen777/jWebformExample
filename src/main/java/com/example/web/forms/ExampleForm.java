@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import jwebform.Form;
 import jwebform.element.CheckBoxType;
 import jwebform.element.NumberType;
@@ -15,6 +16,7 @@ import jwebform.element.SelectType;
 import jwebform.element.SubmitType;
 import jwebform.element.TextAreaType;
 import jwebform.element.TextType;
+import jwebform.element.UploadType;
 import jwebform.element.XSRFProtectionType;
 import jwebform.element.structure.Decoration;
 import jwebform.element.structure.ElementContainer;
@@ -43,6 +45,7 @@ public class ExampleForm {
     ElementContainer gender =
         new SelectType("gender", "", new String[] {"m", "f"}, new String[] {"Male", "Female"})
             .of(new Decoration("Gender", "help", ""));
+
 
     ElementContainer optin =
         new CheckBoxType("optin", true).of(new Decoration("Optin", "help", "placeholder"));
@@ -77,6 +80,7 @@ public class ExampleForm {
     elements.add(textArea);
     elements.add(number2);
     elements.add(password);
+    elements.add(new UploadType("upload").of());
     // elements.add(checkoutDate);
     elements.add(submit);
     formValidators.add(it -> {
