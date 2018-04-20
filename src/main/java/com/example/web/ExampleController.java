@@ -20,6 +20,26 @@ public class ExampleController {
 
   private static final Logger log = LoggerFactory.getLogger(ExampleController.class);
 
+  @RequestMapping("/bootstrap2")
+  public String bootstrap2(Model model, HttpServletRequest request) {
+    FormResult formResult = ExampleForm.build().run(new RequestEnvBuilder().of(request));
+    StartEndRenderer renderer = new StartEndRenderer(formResult, "GET", true);
+    model.addAttribute("form", formResult.getView());
+    model.addAttribute("startEnd", renderer);
+    if (formResult.isOk()) {
+      model.addAttribute("ok", true);
+    }
+    // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
+    // model.addAttribute("form2", formResult2.getView().getHtml(theme));
+    // if (formResult2.isOk()) {
+    // System.err.println("Everything is fine!2");
+    // }
+
+
+    return "example";
+  }
+
+
 
   @RequestMapping("/example")
   public String example(Model model, HttpServletRequest request) {
@@ -63,25 +83,6 @@ public class ExampleController {
     return "bootstrap";
   }
 
-
-  @RequestMapping("/bootstrap2")
-  public String bootstrap2(Model model, HttpServletRequest request) {
-    FormResult formResult = ExampleForm.build().run(new RequestEnvBuilder().of(request));
-    StartEndRenderer renderer = new StartEndRenderer(formResult, "GET", true);
-    model.addAttribute("form", formResult.getView());
-    model.addAttribute("startEnd", renderer);
-    if (formResult.isOk()) {
-      model.addAttribute("ok", true);
-    }
-    // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
-    // model.addAttribute("form2", formResult2.getView().getHtml(theme));
-    // if (formResult2.isOk()) {
-    // System.err.println("Everything is fine!2");
-    // }
-
-
-    return "example";
-  }
 
 
 }
