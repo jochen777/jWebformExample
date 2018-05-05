@@ -25,7 +25,7 @@ public class ExampleController {
   @RequestMapping("/bootstrap2")
   public String bootstrap2(Model model, HttpServletRequest request) {
     FormResult formResult = ExampleForm.build().run(new RequestEnvBuilder().of(request));
-    model.addAttribute("form", formResult.getView(false, "GET"));
+    model.addAttribute("form", formResult.getView());
     if (formResult.isOk()) {
       model.addAttribute("ok", true);
     }
@@ -40,6 +40,7 @@ public class ExampleController {
   }
 
 
+
   @RequestMapping("/example")
   public String example(Model model, HttpServletRequest request) {
     FormResult formResult = ExampleForm.build().run(new RequestEnvBuilder().of(request));
@@ -47,7 +48,7 @@ public class ExampleController {
         new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
 
     model.addAttribute("form", renderer.render("POST", true));
-    model.addAttribute("form_raw", formResult.getView(true, "GET"));
+    model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
     }
@@ -68,7 +69,7 @@ public class ExampleController {
     ThemeJavaRenderer renderer = new ThemeJavaRenderer(formResult,
         new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     model.addAttribute("form", renderer.render("GET", true));
-    model.addAttribute("form_raw", formResult.getView(true, "GET"));
+    model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
     }
@@ -81,8 +82,6 @@ public class ExampleController {
 
     return "bootstrap";
   }
-
-
 
 
 }
