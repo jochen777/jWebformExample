@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import jwebform.Form;
 import jwebform.element.CheckBoxType;
 import jwebform.element.NumberType;
@@ -33,8 +32,9 @@ public class ExampleForm {
 
     XSRFProtectionType xsrfProtection = new XSRFProtectionType();
 
-    ElementContainer firstname = new TextType("firstname", "Jochen").of(new Validator(),
-        new Decoration("Your firstname", "hilfe zum Vorname", ""));
+    ElementContainer firstname =
+        new TextType("firstname", "Jochen").of(new Validator(Criteria.accept("Jochen", "Horst")),
+            new Decoration("Your firstname", "hilfe zum Vorname", ""));
     ElementContainer lastname = new TextType("lastname", "pie").of(
         new Validator(Criteria.required(), Criteria.maxLength(3)),
         new Decoration("Your lastname", "help", "placeholder"));

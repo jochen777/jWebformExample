@@ -1,12 +1,15 @@
 {###### Utils ##############}
 {% macro jw_renderStart(form, formClass) %}
-  {{ form.startEnd.start(" class=\""+formClass+"\" ") | raw }}
+  <form name="{{ form.formId }}-FORMCHECKER" method="{{ form.method }}" class="{{ formClass }}"
+{%  if form.isUploadEnctypeRequired %} enctype="multipart/form-data" {% endif %}
+{% if form.isHtml5Validaiton %}novalidate{% endif %} id="{{ form.formId }}">
+    <input type="hidden" name="WF_SUBMITTED" value="WF-{{ form.formId }}">
 {% endmacro %}
 
 
 {# todo don't use theme here! #}
 {% macro jw_renderEnd(form) %}
-  {{ form.startEnd.end | raw }}
+  </form>
 {% endmacro %}
 
 

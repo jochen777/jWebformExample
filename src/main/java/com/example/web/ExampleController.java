@@ -1,26 +1,27 @@
 package com.example.web;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.example.jwebform_integration.RequestEnvBuilder;
 import com.example.web.forms.ExampleForm;
 import com.example.web.forms.FormcheckerCopyForm;
-
 import jwebform.FormResult;
-import jwebform.themes.sourcecode.ThemeJavaRenderer;
-import jwebform.themes.sourcecode.mapper.StandardMapper;
 
 @Controller
 public class ExampleController {
 
 
   private static final Logger log = LoggerFactory.getLogger(ExampleController.class);
+
+  @Autowired
+  private MessageSource messageSource;
+
 
   @RequestMapping("/bootstrap2")
   public String bootstrap2(Model model, HttpServletRequest request) {
@@ -35,7 +36,6 @@ public class ExampleController {
     // System.err.println("Everything is fine!2");
     // }
 
-
     return "example";
   }
 
@@ -44,10 +44,10 @@ public class ExampleController {
   @RequestMapping("/example")
   public String example(Model model, HttpServletRequest request) {
     FormResult formResult = ExampleForm.build().run(new RequestEnvBuilder().of(request));
-    ThemeJavaRenderer renderer = new ThemeJavaRenderer(
-        new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
-
-    model.addAttribute("form", renderer.render(formResult, "POST", true));
+    // ThemeJavaRenderer renderer = new ThemeJavaRenderer(
+    // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
+    //
+    // model.addAttribute("form", renderer.render(formResult, "POST", true));
     model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
@@ -66,9 +66,9 @@ public class ExampleController {
   @RequestMapping("/boostrap")
   public String bootstrap(Model model, HttpServletRequest request) {
     FormResult formResult = FormcheckerCopyForm.build().run(new RequestEnvBuilder().of(request));
-    ThemeJavaRenderer renderer = new ThemeJavaRenderer(
-        new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
-    model.addAttribute("form", renderer.render(formResult, "GET", true));
+    // ThemeJavaRenderer renderer = new ThemeJavaRenderer(
+    // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
+    // model.addAttribute("form", renderer.render(formResult, "GET", true));
     model.addAttribute("form_raw", formResult.getView());
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");

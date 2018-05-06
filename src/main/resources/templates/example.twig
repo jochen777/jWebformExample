@@ -35,10 +35,10 @@
 
 
 <div style="width:500px; margin-left:50px">
-<h1>Hello World</h1>
+<h1>Hello World!</h1>
 {{ jw_renderFormFree(form, {"override_types": {},
    "form_class": "form-new"}) }}
-
+{{ message('jformchecker.required') }}
 {#{ jw_renderForm(form) | raw }#}
 </div>
 
