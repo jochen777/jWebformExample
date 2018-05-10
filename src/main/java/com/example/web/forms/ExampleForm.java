@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import jwebform.Form;
 import jwebform.element.CheckBoxType;
 import jwebform.element.NumberType;
@@ -17,6 +18,7 @@ import jwebform.element.TextAreaType;
 import jwebform.element.TextType;
 import jwebform.element.UploadType;
 import jwebform.element.XSRFProtectionType;
+import jwebform.element.builder.TextTypeBuilder;
 import jwebform.element.structure.Decoration;
 import jwebform.element.structure.ElementContainer;
 import jwebform.validation.FormValidator;
@@ -83,6 +85,9 @@ public class ExampleForm {
     elements.add(new UploadType("upload").of());
     // elements.add(checkoutDate);
     elements.add(submit);
+    elements.add(TextTypeBuilder.builder().withName("peter").withCriteria(Criteria.required())
+        .withDecoration(Decoration.builder().withLabel("Horst").build()).build());
+
     formValidators.add(it -> {
       final Map<ElementContainer, ValidationResult> overridenValidationResults = new HashMap<>();
       if (it.get(firstname).getValue().length() > 8) {
