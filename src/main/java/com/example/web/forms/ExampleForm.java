@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import jwebform.Form;
+import jwebform.FormBuilder;
 import jwebform.element.CheckBoxType;
 import jwebform.element.NumberType;
 import jwebform.element.PasswordType;
@@ -18,7 +18,6 @@ import jwebform.element.TextAreaType;
 import jwebform.element.TextType;
 import jwebform.element.UploadType;
 import jwebform.element.XSRFProtectionType;
-import jwebform.element.builder.TextTypeBuilder;
 import jwebform.element.structure.Decoration;
 import jwebform.element.structure.ElementContainer;
 import jwebform.validation.FormValidator;
@@ -29,7 +28,6 @@ import jwebform.validation.criteria.Criteria;
 public class ExampleForm {
 
   public static Form build() {
-    String id = "id";
     List<FormValidator> formValidators = new ArrayList<>();
 
     XSRFProtectionType xsrfProtection = new XSRFProtectionType();
@@ -85,8 +83,6 @@ public class ExampleForm {
     elements.add(new UploadType("upload").of());
     // elements.add(checkoutDate);
     elements.add(submit);
-    elements.add(TextTypeBuilder.builder().withName("peter").withCriteria(Criteria.required())
-        .withDecoration(Decoration.builder().withLabel("Horst").build()).build());
 
     formValidators.add(it -> {
       final Map<ElementContainer, ValidationResult> overridenValidationResults = new HashMap<>();
@@ -95,7 +91,8 @@ public class ExampleForm {
       }
       return overridenValidationResults;
     });
-    return new Form(id, elements, formValidators);
+    return FormBuilder.simple().elementContainer(elements).validation(formValidators)
+        .build();
   }
 
   // formchecker DateInput: 52 methods
