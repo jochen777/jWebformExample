@@ -20,6 +20,7 @@ import jwebform.element.UploadType;
 import jwebform.element.XSRFProtectionType;
 import jwebform.element.structure.Decoration;
 import jwebform.element.structure.ElementContainer;
+import jwebform.processors.ElementValdationResults;
 import jwebform.validation.FormValidator;
 import jwebform.validation.ValidationResult;
 import jwebform.validation.Validator;
@@ -85,11 +86,10 @@ public class ExampleForm {
     elements.add(submit);
 
     formValidators.add(it -> {
-      final Map<ElementContainer, ValidationResult> overridenValidationResults = new HashMap<>();
       if (it.get(firstname).getValue().length() > 8) {
-        overridenValidationResults.put(firstname, ValidationResult.fail("not_ok"));
+        return ElementValdationResults.of(firstname, ValidationResult.fail("not_ok"));
       }
-      return overridenValidationResults;
+      return ElementValdationResults.empty();
     });
     return FormBuilder.simple().elementContainer(elements).validation(formValidators)
         .build();
