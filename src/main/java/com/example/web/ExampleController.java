@@ -1,6 +1,8 @@
 package com.example.web;
 
 import javax.servlet.http.HttpServletRequest;
+
+import jwebform.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,7 @@ public class ExampleController {
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     //
     // model.addAttribute("form", renderer.render(formResult, "POST", true));
-    model.addAttribute("form_raw", formResult.getView());
+    model.addAttribute("form_raw", formResult.getView(View.Html5Validation.on, View.Method.POST));
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
     }
