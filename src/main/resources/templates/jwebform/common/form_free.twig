@@ -1,4 +1,4 @@
-{###### Utils ##############}
+{# ##### Utils ############# #}
 {% macro jw_renderStart(form, formClass) %}
   <form name="{{ form.formId }}-FORMCHECKER" method="{{ form.method }}" class="{{ formClass }}"
 {%  if form.isUploadEnctypeRequired %} enctype="multipart/form-data" {% endif %}

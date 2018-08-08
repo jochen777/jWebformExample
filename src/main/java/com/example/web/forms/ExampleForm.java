@@ -31,7 +31,7 @@ public class ExampleForm {
   public static Form build() {
     List<FormValidator> formValidators = new ArrayList<>();
 
-    XSRFProtectionType xsrfProtection = new XSRFProtectionType();
+    //XSRFProtectionType xsrfProtection = new XSRFProtectionType();
 
     ElementContainer firstname =
         new TextType("firstname", "Jochen").of(new Validator(Criteria.accept("Jochen", "Horst")),
@@ -70,7 +70,7 @@ public class ExampleForm {
     ElementContainer submit = new SubmitType("Save").of();
 
     List<ElementContainer> elements = new ArrayList<>();
-    elements.add(xsrfProtection.of());
+    //elements.add(xsrfProtection.of());
     elements.add(firstname);
     elements.add(lastname);
     elements.add(birthday);
