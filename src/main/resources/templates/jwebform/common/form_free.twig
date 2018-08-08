@@ -72,7 +72,7 @@
 {# no classes here #}
 {% endmacro %}
 
-{###### Types ##############}
+{# ##### Types ############# #}
 
 {% macro jw_renderTextType(producerInfo, type) %}
     {{ jw_startingDiv(producerInfo) }}
@@ -210,7 +210,7 @@
       </div>
 {% endmacro %}
 
-{###### Router ##############}
+{# ##### Router ############# #}
 
 {% macro jw_renderElementFree(producerInfo, overrides) %}
     {% if overrides["override_types"][producerInfo.elementTypeName] is not empty %} 
