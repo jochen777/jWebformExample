@@ -32,11 +32,6 @@ public class ExampleController {
     if (formResult.isOk()) {
       model.addAttribute("ok", true);
     }
-    // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
-    // model.addAttribute("form2", formResult2.getView().getHtml(theme));
-    // if (formResult2.isOk()) {
-    // System.err.println("Everything is fine!2");
-    // }
 
     return "example";
   }
