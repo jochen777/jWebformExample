@@ -26,6 +26,8 @@ import jwebform.validation.ValidationResult;
 import jwebform.validation.Validator;
 import jwebform.validation.criteria.Criteria;
 
+import static jwebform.element.builder.Type.text;
+
 public class ExampleForm {
 
   public static Form build() {
@@ -33,9 +35,12 @@ public class ExampleForm {
 
     XSRFProtectionType xsrfProtection = new XSRFProtectionType();
 
-    ElementContainer firstname =
-        new TextType("firstname", "Jochen").of(new Validator(Criteria.accept("Jochen", "Horst")),
-            new Decoration("Your firstname", "hilfe zum Vorname", ""));
+    ElementContainer firstname = text("firstname", "firstname")
+      .withCriteria(Criteria.accept("Jochen", "Horst"))
+      .withLabel("Your firstname").withHelptext("hilfe zum Vorname")
+      .build();
+
+
     ElementContainer lastname = new TextType("lastname", "pie").of(
         new Validator(Criteria.required(), Criteria.maxLength(3)),
         new Decoration("Your lastname", "help", "placeholder"));

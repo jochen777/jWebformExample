@@ -7,9 +7,9 @@
           {{>jwebform/common/elements/widgets/requiredAttribute }}
           {{>jwebform/common/elements/widgets/ariaDescribedBy }}
           >
-          {{ #elementNameInfo.selected }}
+          {{ #elementInfoMap.selected }}
               <option value="{{ key }}" {{#selcted}}SELECTED{{/selcted}}>{{ value }}</option>
-          {{ /elementNameInfo.selected }}
+          {{ /elementInfoMap.selected }}
         </select>
 {{>jwebform/common/elements/widgets/error}}
 {{>jwebform/common/elements/widgets/help}}

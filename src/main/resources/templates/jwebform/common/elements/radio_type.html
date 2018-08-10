@@ -1,11 +1,11 @@
 {{>jwebform/common/elements/widgets/startingDiv}}
 {{>jwebform/common/elements/widgets/label}}
-          {{ #elementNameInfo.radioElements }}
+          {{ #elementInfoMap.radioElements }}
 
             <div class="radio">
                 <label>
                   <input type="radio" 
-                    id="form-radio-{{ nameOfInput }}-{{ key}}"
+                    id="form-radio-{{ name }}-{{ key}}"
                     {{>jwebform/common/elements/widgets/nameAttribute }}  
                     value="{{ key}}" 
 										{{ #selected }}checked{{/selected}}  
@@ -17,7 +17,7 @@
                 </label>
             </div>
 
-          {{ /elementNameInfo.radioElements }}
+          {{ /elementInfoMap.radioElements }}
 
 
 {{>jwebform/common/elements/widgets/error}}

@@ -1,4 +1,4 @@
-{{ #elementContainer.decoration.isLabelNotEmpty }}
-  <label class="control-label" for="{{ nameOfInput }}">{{ elementContainer.decoration.label }}:
-  {{ #elementContainer.validator.isRequired }}*{{ /elementContainer.validator.isRequired }}</label>
-{{ /elementContainer.decoration.isLabelNotEmpty }}
+{{ #decoration.isLabelNotEmpty }}
+  <label class="control-label" for="{{ name }}">{{ decoration.label }}:
+  {{ #validator.isRequired }}*{{ /validator.isRequired }}</label>
+{{ /decoration.isLabelNotEmpty }}

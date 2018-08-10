@@ -15,29 +15,29 @@
 
 
 {% macro jw_label(producerInfo) %}
-{% if producerInfo.elementContainer.decoration.label is not empty %}
-  <label class="control-label" for="{{ producerInfo.nameOfInput }}">{{ producerInfo.elementContainer.decoration.label }}: {{ producerInfo.elementContainer.validator.isRequired?"*":"" }}</label>
+{% if producerInfo.decoration.label is not empty %}
+  <label class="control-label" for="{{ producerInfo.name }}">{{ producerInfo.decoration.label }}: {{ producerInfo.validator.isRequired?"*":"" }}</label>
 {% endif %}
 {% endmacro %}
 
 {% macro jw_error(producerInfo) %}
-    {% if producerInfo.elementResult.validationResult.isError %}
-    <br><span class="helpBlock error">{{ message(producerInfo.elementResult.validationResult.message) }}</span>
+    {% if producerInfo.validationResult.isError %}
+    <br><span class="helpBlock error">{{ message(producerInfo.validationResult.message) }}</span>
     {% endif %}
 {% endmacro %}
 
 {% macro js_help(producerInfo) %}
-    {% if producerInfo.elementContainer.decoration.helptext is not empty %}
-    <span id="helpBlock-{{ producerInfo.nameOfInput }}" class="help-block">{{ producerInfo.elementContainer.decoration.helptext }}</span>
+    {% if producerInfo.decoration.helptext is not empty %}
+    <span id="helpBlock-{{ producerInfo.name }}" class="help-block">{{ producerInfo.decoration.helptext }}</span>
     {% endif %}
 {% endmacro %}
 
 {% macro js_requiredAttribute(producerInfo) %}
-  {{ producerInfo.elementContainer.validator.isRequired?" required ":"" }}
+  {{ producerInfo.validator.isRequired?" required ":"" }}
 {% endmacro %}
 
 {% macro js_maxLenAtrribute(producerInfo) %}
-  {{ (producerInfo.elementContainer.validator.maxLen.present ?(' maxlength="'+producerInfo.elementContainer.validator.maxLen.get.maxLength+'"') | raw :"") }}
+  {{ (producerInfo.validator.maxLen.present ?(' maxlength="'+producerInfo.validator.maxLen.get.maxLength+'"') | raw :"") }}
 {% endmacro %}
 
 {% macro js_tabIndex(producerInfo) %}
@@ -45,25 +45,25 @@
 {% endmacro %}
 
 {% macro js_nameAttribute(producerInfo) %}
-  name="{{ producerInfo.nameOfInput }}"
+  name="{{ producerInfo.name }}"
 {% endmacro %}
 
 {% macro js_ariaDescribedBy(producerInfo) %}
-  {% if producerInfo.elementContainer.decoration.helptext is not empty %}
-    aria-describedby="helpBlock-{{ producerInfo.nameOfInput }}"
+  {% if producerInfo.decoration.helptext is not empty %}
+    aria-describedby="helpBlock-{{ producerInfo.name }}"
   {% endif %}
 {% endmacro %}
 
 
 {% macro js_placeholder(producerInfo) %}
-  {% if producerInfo.elementContainer.decoration.placeholder is not empty %}
-    placeholder="{{ producerInfo.elementContainer.decoration.placeholder }}"
+  {% if producerInfo.decoration.placeholder is not empty %}
+    placeholder="{{ producerInfo.decoration.placeholder }}"
   {% endif %}
 {% endmacro %}
 
 {% macro jw_startingDiv(producerInfo) %}
-    <div class="form-group {{ producerInfo.elementResult.validationResult.isSuccess? "has-success":
-    (producerInfo.elementResult.validationResult.isError?"has-error":"")
+    <div class="form-group {{ producerInfo.validationResult.isSuccess? "has-success":
+    (producerInfo.validationResult.isError?"has-error":"")
     }}">
 {% endmacro %}
 
@@ -80,7 +80,7 @@
         <input 
           {{ js_inputClass() }}
           type="{{ type }}"
-          value="{{ producerInfo.elementResult.value }}"
+          value="{{ producerInfo.value }}"
           {{ js_tabIndex(producerInfo) }}  
           {{ js_nameAttribute(producerInfo) }} 
           {{ js_requiredAttribute(producerInfo) }}
@@ -104,7 +104,7 @@
           {{ js_maxLenAtrribute(producerInfo) }}
           {{ js_placeholder(producerInfo) }}
           {{ js_ariaDescribedBy(producerInfo) }}
-         >{{ producerInfo.elementResult.value }}</textarea>
+         >{{ producerInfo.value }}</textarea>
         {{ jw_error(producerInfo) }}
         {{ js_help( producerInfo) }}
     </div>
@@ -112,7 +112,7 @@
 
 {% macro jw_renderSubmit(producerInfo) %}
 <div>
-<button type="submit" class="btn" name="{{ producerInfo.element.name }}" value="" {{ js_tabIndex(producerInfo) }} >{{ producerInfo.element.label }}</button><br>
+<button type="submit" class="btn" name="{{ producerInfo.name }}" value="" {{ js_tabIndex(producerInfo) }} >{{ producerInfo.element.label }}</button><br>
 </div>
 {% endmacro %}
 
@@ -123,10 +123,10 @@
             <div class="radio">
                 <label>
                   <input type="radio" 
-                    id="form-radio-{{ producerInfo.nameOfInput }}-{{ radioEntry.key}}"
+                    id="form-radio-{{ producerInfo.name }}-{{ radioEntry.key}}"
                     {{ js_nameAttribute(producerInfo) }}  
                     value="{{ radioEntry.key}}" 
-                    {{ producerInfo.elementResult.value == radioEntry.key?"checked":"" }} 
+                    {{ producerInfo.value == radioEntry.key?"checked":"" }}
                     {{ js_requiredAttribute(producerInfo) }}
                     {{ js_tabIndex(producerInfo) }} 
                   >
@@ -172,7 +172,7 @@
           {{ js_ariaDescribedBy(producerInfo) }}
         >
             {% for selectElem in producerInfo.element.entries %}
-              <option value="{{ selectElem.key }}" {{ producerInfo.elementResult.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
+              <option value="{{ selectElem.key }}" {{ producerInfo.value == selectElem.key?"SELECTED":"" }}>{{ selectElem.value }}</option>
             {% endfor %}
         </select>
         {{ jw_error(producerInfo) }}
@@ -183,7 +183,7 @@
 {# renders the form completly within the template #}
 {% macro jw_renderFormFree(form, overrides) %}
     {{ jw_renderStart(form, overrides["form_class"]) }}
-    {% for producerInfo in form.unrenderedElements %}
+    {% for producerInfo in form.producerInfosContainer.piList %}
         {{ jw_renderElementFree(producerInfo, overrides) }}
     {% endfor %}
     {{ jw_renderEnd(form) }}
@@ -196,7 +196,7 @@
         {{ js_tabIndex(producerInfo) }}  
         {{ js_nameAttribute(producerInfo) }} 
         {{ js_requiredAttribute(producerInfo) }}
-        {{ producerInfo.elementResult.valueObject?"checked":"" }} 
+        {{ producerInfo.valueObject?"checked":"" }}
         {{ js_ariaDescribedBy(producerInfo) }}
       >
       {{ js_help( producerInfo) }}
