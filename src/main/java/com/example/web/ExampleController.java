@@ -47,7 +47,7 @@ public class ExampleController {
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     //
     // model.addAttribute("form", renderer.render(formResult, "POST", true));
-    model.addAttribute("form_raw", formResult.getView(View.Html5Validation.on, View.Method.POST));
+    model.addAttribute("form_raw", formResult.getView(View.Html5Validation.ON, View.Method.POST));
     if (formResult.isOk()) {
       System.err.println("Everything is fine!");
     }
