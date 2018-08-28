@@ -1,3 +1,4 @@
+{% import "jwebform/common/render_individual" %}
 {# ##### Utils ############# #}
 {% macro jw_renderStart(form, formClass) %}
   <form name="{{ form.formId }}-FORMCHECKER" method="{{ form.method }}" class="{{ formClass }}"
@@ -213,34 +214,35 @@
 {# ##### Router ############# #}
 
 {% macro jw_renderElementFree(producerInfo, overrides) %}
-    {% if overrides["override_types"][producerInfo.elementTypeName] is not empty %} 
+    {{ overrides["override_types"] }}
+    {% if (overrides["override_types"][producerInfo.typeName]) is not empty %}
       {{ renderIndividual(producerInfo) }}
     {% else  %}
-        {% if  producerInfo.elementTypeName == "jwebform.element.XSRFProtectionType" %}
+        {% if  producerInfo.typeName == "jwebform.element.XSRFProtectionType" %}
             {{ producerInfo.html | raw }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.TextType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.TextType" %}
             {{ jw_renderTextType(producerInfo, "text") }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.HtmlType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.HtmlType" %}
             {{ producerInfo.html | raw }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.SubmitType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.SubmitType" %}
             {{ jw_renderSubmit(producerInfo) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.NumberType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.NumberType" %}
             {{ jw_renderTextType(producerInfo, "number") }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.TextDateType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.TextDateType" %}
             {{ jw_renderTextDateType(producerInfo, overrides) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.SelectType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.SelectType" %}
             {{ jw_renderSelectType(producerInfo) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.CheckBoxType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.CheckBoxType" %}
             {{ jw_renderCheckBoxType(producerInfo) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.TextAreaType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.TextAreaType" %}
             {{ jw_renderTextAreaType(producerInfo) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.SelectDateType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.SelectDateType" %}
             {{ jw_renderSelectDateType(producerInfo, overrides) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.UploadType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.UploadType" %}
             {{ jw_renderUpload(producerInfo) }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.PasswordType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.PasswordType" %}
             {{ jw_renderTextType(producerInfo, "password") }}
-        {% elseif producerInfo.elementTypeName == "jwebform.element.RadioType" %}
+        {% elseif producerInfo.typeName == "jwebform.element.RadioType" %}
             {{ jw_renderRadioType(producerInfo) }}
          {# Missing hidden!! #}
         {% else  %}

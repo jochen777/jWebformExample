@@ -7,99 +7,115 @@ import java.util.List;
 import java.util.Map;
 import jwebform.Form;
 import jwebform.FormBuilder;
-import jwebform.element.CheckBoxType;
-import jwebform.element.NumberType;
-import jwebform.element.PasswordType;
-import jwebform.element.RadioType;
-import jwebform.element.SelectDateType;
-import jwebform.element.SelectType;
-import jwebform.element.SubmitType;
-import jwebform.element.TextAreaType;
-import jwebform.element.TextType;
-import jwebform.element.UploadType;
-import jwebform.element.XSRFProtectionType;
-import jwebform.element.structure.Decoration;
-import jwebform.element.structure.ElementContainer;
-import jwebform.processors.ElementValdationResults;
+import jwebform.FormResult;
+import jwebform.field.builder.FieldBuilder;
+import jwebform.processor.FieldValdationResults;
+import jwebform.processor.LoggingFormResult;
+import jwebform.validation.Criterion;
 import jwebform.validation.FormValidator;
 import jwebform.validation.ValidationResult;
 import jwebform.validation.Validator;
 import jwebform.validation.criteria.Criteria;
 
-import static jwebform.element.builder.Type.text;
+import static jwebform.field.builder.BuildInType.*;
+
 
 public class ExampleForm {
 
-  public static Form build() {
-    List<FormValidator> formValidators = new ArrayList<>();
+    private FieldBuilder[] getTypeBuildersForSampleForm() {
+      Criterion req = Criteria.required();
 
-    XSRFProtectionType xsrfProtection = new XSRFProtectionType();
+      // @formatter:off
 
-    ElementContainer firstname = text("firstname", "firstname")
-      .withCriteria(Criteria.accept("Jochen", "Horst"))
-      .withLabel("Your firstname").withHelptext("hilfe zum Vorname")
-      .build();
+  return FormBuilder.array(
 
+    xsrfProtectionForTesting(),
 
-    ElementContainer lastname = new TextType("lastname", "pie").of(
-        new Validator(Criteria.required(), Criteria.maxLength(3)),
-        new Decoration("Your lastname", "help", "placeholder"));
-    ElementContainer number = new TextType("number", "2").of(new Validator(Criteria.number()),
-        new Decoration("Size", "help", "placeholder"));
-    ElementContainer birthday = new SelectDateType("birthday", LocalDate.now(), 2018, 2020).of(
-        new Validator(), new Decoration("Birhtday", "Please insert your birhtday", "placeholder"));
-    ElementContainer gender =
-        new SelectType("gender", "", new String[] {"m", "f"}, new String[] {"Male", "Female"})
-            .of(new Decoration("Gender", "help", ""));
+    simple(),
 
+    text                  ("textInput", "Peter\"Paul").
+      withCriteria        (req).
+      withLabel           ("TextInputLabel"),
 
-    ElementContainer optin =
-        new CheckBoxType("optin", true).of(new Decoration("Optin", "help", "placeholder"));
+    textDate              ("dateInput", LocalDate.of(2017, 7, 4)).
+      withCriteria        (req).
+      withLabel           ("Please insert date").
+      withHelptext        ("datehelptext"),
 
-    ElementContainer textArea = new TextAreaType("area", "").of(new Decoration("Area"));
+    text                  ("textInput2", "Peter\"Paul").
+      withCriteria        (req).
+      withLabel           ("TextInputLabel2").
+      withHelptext        ("Help-Text").
+      withPlaceholder     ("Placeholder"),
 
-    ElementContainer number2 =
-        new NumberType("number2", 5).of(new Decoration("Number", "help", "placeholder"));
+    select                ("gender", "", new String[] {"m", "f"}, new String[] {"Male", "Female"}).
+      withLabel           ("Gender"),
 
-    ElementContainer password =
-        new PasswordType("pwd").of(new Decoration("Passwoid", "help", "placeholder"));
+    submit("Submit"),
 
-    ElementContainer radio =
-        new RadioType("radio", "", new String[] {"m", "f"}, new String[] {"Mr", "Misses"})
-            .of(new Validator(Criteria.required()), new Decoration("Your Prefix", "help", ""));
+    checkbox              ("chk", true).
+      withCriteria        (req).
+      withLabel           ("chk-label").
+      withHelptext        ("chk_help"),
 
-    // ElementContainer checkoutDate = new SelectDateType("checkoutDate",
-    // new Decoration("Checkout Date"), LocalDate.now(), 2020, 2015).of();
+    label                 ("lbl"),
 
+    html                  ("<strong>HTML</strong>"),
 
-    ElementContainer submit = new SubmitType("Save").of();
+    hidden                ("hddn", "hddn-value"),
 
-    List<ElementContainer> elements = new ArrayList<>();
-    elements.add(xsrfProtection.of());
-    elements.add(firstname);
-    elements.add(lastname);
-    elements.add(birthday);
-    elements.add(radio);
-    elements.add(number);
-    elements.add(gender);
-    elements.add(optin);
-    elements.add(textArea);
-    elements.add(number2);
-    elements.add(password);
-    elements.add(new UploadType("upload").of());
-    // elements.add(checkoutDate);
-    elements.add(submit);
+    textArea              ("area", "Area-Prebuild").
+      withCriteria        (req).
+      withLabel           ("Area").
+      withHelptext        ("Area-Help").
+      withPlaceholder     ("Area-Placeholder"),
 
-    formValidators.add(it -> {
-      if (it.get(firstname).getValue().length() > 8) {
-        return ElementValdationResults.of(firstname, ValidationResult.fail("not_ok"));
-      }
-      return ElementValdationResults.empty();
-    });
-    return FormBuilder.simple().elementContainer(elements).validation(formValidators)
+    number                ("nbr", 5).
+      withCriteria        (req).
+      withLabel           ("nbr-label").
+      withHelptext        ("nbr_help"),
+
+    password              ("pssword").
+      withLabel           ("Password"),
+
+    upload                ("upld").
+      withLabel           ("Upload"),
+
+    radio                 ("radio", "1", new String[] {"1", "2"}, new String[] {"yes", "no"}).
+      withLabel          ("Radio")
+  );
+
+// @formatter:on
+    }
+
+    String formId;
+
+    public ExampleForm(String formId) {
+      this.formId = formId;
+    }
+
+    public LocalDate getDateValue(FormResult formResult) {
+      return (LocalDate) formResult.getFieldResults().getObectValue("dateInput");
+    }
+
+    public Form buildForm() {
+      List<FormValidator> formValidators = new ArrayList<>();
+      formValidators.add(it -> {
+        FieldValdationResults overridenValidationResults = new FieldValdationResults();
+        String valueOfTextInput = it.getFieldStringValue("textInput");
+        if (valueOfTextInput.length() > 3) {
+          overridenValidationResults.put(it.getField("textInput"), ValidationResult.fail("not_ok"));
+        }
+        return overridenValidationResults;
+      });
+
+      // test here field-apis
+      return FormBuilder.flexible(formId, LoggingFormResult::new).validation(formValidators)
+        .typeBuilder(getTypeBuildersForSampleForm())
+
         .build();
-  }
 
-  // formchecker DateInput: 52 methods
-  // jWebform DateInput: 3
-}
+    }
+
+
+  }

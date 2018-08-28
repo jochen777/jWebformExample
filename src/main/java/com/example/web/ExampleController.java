@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.jwebform_integration.RequestEnvBuilder;
 import com.example.web.forms.ExampleForm;
-import com.example.web.forms.FormcheckerCopyForm;
 import jwebform.FormResult;
 
 @Controller
@@ -27,7 +26,7 @@ public class ExampleController {
 
   @RequestMapping("/bootstrap2")
   public String bootstrap2(Model model, HttpServletRequest request) {
-    FormResult formResult = ExampleForm.build().run(RequestEnvBuilder.of(request));
+    FormResult formResult = new ExampleForm("1").buildForm().run(RequestEnvBuilder.of(request));
     model.addAttribute("form", formResult.getView());
     if (formResult.isOk()) {
       model.addAttribute("ok", true);
@@ -42,7 +41,7 @@ public class ExampleController {
 
   @RequestMapping("/example")
   public String example(Model model, HttpServletRequest request) {
-    FormResult formResult = ExampleForm.build().run(RequestEnvBuilder.of(request));
+    FormResult formResult = new ExampleForm("1").buildForm().run(RequestEnvBuilder.of(request));
     // ThemeJavaRenderer renderer = new ThemeJavaRenderer(
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     //
@@ -64,7 +63,7 @@ public class ExampleController {
 
   @RequestMapping("/boostrap")
   public String bootstrap(Model model, HttpServletRequest request) {
-    FormResult formResult = FormcheckerCopyForm.build().run(RequestEnvBuilder.of(request));
+    FormResult formResult = new ExampleForm("1").buildForm().run(RequestEnvBuilder.of(request));
     // ThemeJavaRenderer renderer = new ThemeJavaRenderer(
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     // model.addAttribute("form", renderer.render(formResult, "GET", true));
