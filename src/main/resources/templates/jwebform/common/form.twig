@@ -1,25 +1,30 @@
+
+
+{###### Helper ##############}
+
+{# todo don't use theme here! #}
 {% macro jw_renderStart(form) %}
-{{ form.startEnd.start | raw }}
-{% endmacro %}
-
-{% macro jw_renderEnd(form) %}
-{{ form.startEnd.end | raw }}
+    {{ form.startEnd.start(" class=\"form-new\" ") | raw }}
 {% endmacro %}
 
 
-{% macro jw_renderElement(element) %}
-{{ element.html | raw }}
+
+{% macro jw_startingDiv(producerInfo) %}
+<div class="m-form-group {{ producerInfo.elementResult.validationResult.isSuccess? "has-success":
+(producerInfo.elementResult.validationResult.isError?"has-error":"")
+}}">
+    {% endmacro %}
+
+
+
+
+{# -------------- Router ---------- #}
+
+{% macro renderIndividual(producerInfo) %}
+<h1>Render individual</h1>
 {% endmacro %}
 
-
-{% macro jw_renderForm(form) %}
-{{ jw_renderStart(form) }}
-{% for name in form.elementNames %}
-
-{# uses the theme to render html #}
-{{ jw_renderElement(form.elements[name]) }}
-{#  form.elements[name].elementResult.staticElementInfo.renderKey   #}<br>
-{% endfor %}
-{{ jw_renderEnd(form) }}
+{% macro renderFormFree(form) %}
+    {{ jw_renderFormFree(form, {"override_types": {},
+        "form_class": "form-new"}) }}
 {% endmacro %}
-

@@ -50,8 +50,6 @@ public class ExampleForm {
     select                ("gender", "", new String[] {"m", "f"}, new String[] {"Male", "Female"}).
       label           ("Gender"),
 
-    submit("Submit"),
-
     checkbox              ("chk", true).
       criteria        (req).
       label           ("chk-label").
@@ -81,7 +79,10 @@ public class ExampleForm {
       label           ("Upload"),
 
     radio                 ("radio", "1", new String[] {"1", "2"}, new String[] {"yes", "no"}).
-      label          ("Radio")
+      label          ("Radio"),
+
+    submit("Submit").
+      label("Submit")
   );
 
 // @formatter:on
