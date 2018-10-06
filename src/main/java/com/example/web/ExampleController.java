@@ -3,6 +3,10 @@ package com.example.web;
 import javax.servlet.http.HttpServletRequest;
 
 import jwebform.View;
+import jwebform.field.TextAreaType;
+import jwebform.integration.annotations.UseFieldType;
+import jwebform.spring.JWebForm;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.jwebform_integration.RequestEnvBuilder;
 import com.example.web.forms.ExampleForm;
 import jwebform.FormResult;
+
+import java.time.LocalDate;
 
 @Controller
 public class ExampleController {
@@ -25,17 +31,37 @@ public class ExampleController {
 
 
   @RequestMapping("/bootstrap2")
-  public String bootstrap2(Model model, HttpServletRequest request) {
-    FormResult formResult = new ExampleForm("1").buildForm().run(RequestEnvBuilder.of(request));
-    model.addAttribute("form", formResult.getView());
+  public String bootstrap2(JWebForm form) {
+    FormResult formResult = form.run(new ExampleForm("1").buildForm());
+
     if (formResult.isOk()) {
-      model.addAttribute("ok", true);
+      //model.addAttribute("ok", true);
     }
 
     return "example";
   }
 
+  @RequestMapping("/bootstrap3")
+  public String bootstrap3(JWebForm form) {
+    FormResult formResult = form.run(new Bean());
 
+    if (formResult.isOk()) {
+      //model.addAttribute("ok", true);
+    }
+
+    return "example";
+  }
+
+  public class Bean {
+    @UseFieldType(type = TextAreaType.class)
+    public String name;
+
+    public String lastname;
+    public Integer age;
+    public Boolean optin;
+    public LocalDate birthDay;
+    public String adress;
+  }
 
 
 

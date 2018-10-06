@@ -60,8 +60,8 @@
 
 		<dependency>
 			<groupId>de.cyclon-softworx</groupId>
-			<artifactId>jwebform</artifactId>
-			<version>0.0.10</version>
+			<artifactId>jwebform-spring-boot-starter</artifactId>
+			<version>0.0.10-SNAPSHOT</version>
 		</dependency>
 <!--     <dependency> -->
 <!--         <groupId>com.github.sps.mustache</groupId> -->
