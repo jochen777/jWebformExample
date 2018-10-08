@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import jwebform.View;
 import jwebform.field.TextAreaType;
+import jwebform.integration.annotations.UseDecoration;
 import jwebform.integration.annotations.UseFieldType;
 import jwebform.spring.JWebForm;
 import lombok.Data;
@@ -54,13 +55,15 @@ public class ExampleController {
 
   public class Bean {
     @UseFieldType(type = TextAreaType.class)
-    public String name;
+    @UseDecoration(label = "Dein Name", helpText = "Bitte gebe hier deinen Namen ein", placeholder = "Max")
+    public String name="";
 
-    public String lastname;
-    public Integer age;
-    public Boolean optin;
+    @UseDecoration(label = "Dein Nachname", helpText = "Bitte gebe hier deinen Nachnamen ein", placeholder = "Mustermann")
+    public String lastname="";
+    public Integer age=5;
+    public Boolean optin=true;
     public LocalDate birthDay;
-    public String adress;
+    public String adress="";
   }
 
 
