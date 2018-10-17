@@ -3,6 +3,7 @@ package com.example.web;
 import javax.servlet.http.HttpServletRequest;
 
 import jwebform.View;
+import jwebform.field.SelectType;
 import jwebform.field.SubmitType;
 import jwebform.field.TextAreaType;
 import jwebform.integration.annotations.IgnoreField;
@@ -69,6 +70,10 @@ public class ExampleController {
     public List<Integer> ignoreMe;
     public LocalDate birthDay=LocalDate.now();
     public String adress="";
+
+    @UseFieldType(type = SelectType.class, keys = {"m", "f"}, vals = {"Male", "Female"})
+    public String gender="";
+
 
     @UseFieldType(type = SubmitType.class)
     public String ok;
