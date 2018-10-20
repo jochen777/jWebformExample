@@ -2,6 +2,7 @@ package com.example.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.web.forms.ExampleBean;
 import jwebform.View;
 import jwebform.field.SelectType;
 import jwebform.field.SubmitType;
@@ -10,6 +11,7 @@ import jwebform.integration.annotations.IgnoreField;
 import jwebform.integration.annotations.UseDecoration;
 import jwebform.integration.annotations.UseFieldType;
 import jwebform.spring.JWebForm;
+import jwebform.spring.SimpleJWebForm;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,15 +50,27 @@ public class ExampleController {
 
   @RequestMapping("/bootstrap3")
   public String bootstrap3(JWebForm form) {
-    FormResult formResult = form.run(new Bean());
+    Bean b = new Bean();
+    FormResult formResult = form.run(b);
 
     if (formResult.isOk()) {
       //model.addAttribute("ok", true);
+      System.err.println("Name is: " + b.name);
     }
 
     return "example";
   }
 
+  @RequestMapping("/bootstrap4")
+  public String bootstrap4(SimpleJWebForm<ExampleBean> form) {
+    if (form.isOk()) {
+      System.err.println("Name is: " + form.getBean().name);
+    }
+    return "example";
+  }
+
+
+  @Data
   public class Bean {
     @UseFieldType(type = TextAreaType.class)
     @UseDecoration(label = "Dein Name", helpText = "Bitte gebe hier deinen Namen ein", placeholder = "Max")
