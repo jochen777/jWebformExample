@@ -6,9 +6,9 @@ import javax.validation.constraints.Size;
 import jwebform.field.SelectType;
 import jwebform.field.SubmitType;
 import jwebform.field.TextAreaType;
-import jwebform.integration.annotations.IgnoreField;
-import jwebform.integration.annotations.UseDecoration;
-import jwebform.integration.annotations.UseFieldType;
+import jwebform.integration.bean2form.annotations.IgnoreField;
+import jwebform.integration.bean2form.annotations.UseDecoration;
+import jwebform.integration.bean2form.annotations.UseFieldType;
 
 public class ExampleBean {
 
@@ -30,15 +30,15 @@ public class ExampleBean {
   public LocalDate birthDay = LocalDate.now();
 
   // this is bean validation!!
-  @UseFieldType(type = TextAreaType.class)
+  @UseFieldType(TextAreaType.class)
   @Size(min = 10, max = 200)
   public String adress = "";
 
-  @UseFieldType(type = SelectType.class, keys = {"m", "f"}, vals = {"Male", "Female"})
+  @UseFieldType(value = SelectType.class, keys = {"m", "f"}, vals = {"Male", "Female"})
   public String gender = "";
 
 
-  @UseFieldType(type = SubmitType.class)
+  @UseFieldType(SubmitType.class)
   public String ok;
 
 }

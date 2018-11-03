@@ -25,7 +25,6 @@ import jwebform.field.builder.BuildInType;
 import jwebform.field.builder.FieldBuilder;
 import jwebform.processor.FieldValdationResults;
 import jwebform.processor.FormGenerator;
-import jwebform.processor.LoggingFormResult;
 import jwebform.validation.Criterion;
 import jwebform.validation.FormValidator;
 import jwebform.validation.ValidationResult;
@@ -126,7 +125,7 @@ public class ExampleForm implements FormGenerator {
     });
 
     // test here field-apis
-    return FormBuilder.flexible(formId, LoggingFormResult::new).validation(formValidators)
+    return FormBuilder.withId(formId).validation(formValidators)
         .typeBuilder(getTypeBuildersForSampleForm())
 
         .build();
