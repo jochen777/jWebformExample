@@ -31,7 +31,7 @@ public class ExampleController {
   public String bootstrap2(FormRunner form) {
     FormResult formResult = form.run(new ExampleForm("1"));
 
-    if (formResult.isSubmittedAndOk()) {
+    if (formResult.isValid()) {
       // model.addAttribute("ok", true);
     }
 
@@ -43,7 +43,7 @@ public class ExampleController {
     ExampleBean b = new ExampleBean();
     FormResult formResult = form.run(b);
 
-    if (formResult.isSubmittedAndOk()) {
+    if (formResult.isValid()) {
       // model.addAttribute("ok", true);
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
@@ -57,7 +57,7 @@ public class ExampleController {
     ExampleBean b = new ExampleBean();
     FormResult formResult = form.run(b);
 
-    if (formResult.isSubmittedAndOk()) {
+    if (formResult.isValid()) {
       // model.addAttribute("ok", true);
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
@@ -70,7 +70,7 @@ public class ExampleController {
   @RequestMapping("/bootstrap4")
   public String bootstrap4(ContainerFormRunner<ExampleBean> form) {
     log.info("Validator: " + validator);
-    if (form.isSubmittedAndOk()) {
+    if (form.isValid()) {
       log.info("Name is: " + form.getBean().name);
       log.info("Birthday is: " + form.getBean().birthDay);
     }
@@ -87,7 +87,7 @@ public class ExampleController {
     // model.addAttribute("form", renderer.render(formResult, "POST", true));
     model.addAttribute("form_raw",
         formResult.getFormModel(FormModel.Html5Validation.ON, FormModel.Method.POST));
-    if (formResult.isSubmittedAndOk()) {
+    if (formResult.isValid()) {
       System.err.println("Everything is fine!");
     }
     // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
@@ -108,7 +108,7 @@ public class ExampleController {
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     // model.addAttribute("form", renderer.render(formResult, "GET", true));
     model.addAttribute("form_raw", formResult.getFormModel());
-    if (formResult.isSubmittedAndOk()) {
+    if (formResult.isValid()) {
       System.err.println("Everything is fine!");
     }
     // FormResult formResult2 = ExampleForm.build("id2").run(new RequestEnv(request));
