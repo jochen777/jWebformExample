@@ -29,7 +29,7 @@ public class ExampleController {
 
   @RequestMapping("/bootstrap2")
   public String bootstrap2(FormRunner form) {
-    FormResult formResult = form.run(new ExampleForm("1"));
+    FormResult formResult = form.runWitFormGenerator(new ExampleForm("1"));
 
     if (formResult.isValid()) {
       // model.addAttribute("ok", true);
@@ -41,7 +41,7 @@ public class ExampleController {
   @RequestMapping("/bootstrap3")
   public String bootstrap3(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormResult formResult = form.run(b);
+    FormResult formResult = form.runWithBean(b);
 
     if (formResult.isValid()) {
       // model.addAttribute("ok", true);
@@ -55,7 +55,7 @@ public class ExampleController {
   @RequestMapping("/bootstrap5")
   public String bootstrap5(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormResult formResult = form.run(b);
+    FormResult formResult = form.runWithBean(b);
 
     if (formResult.isValid()) {
       // model.addAttribute("ok", true);
