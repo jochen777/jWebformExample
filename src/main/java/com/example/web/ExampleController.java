@@ -41,9 +41,9 @@ public class ExampleController {
   @RequestMapping("/bootstrap3")
   public String bootstrap3(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormResult formResult = form.runWithBean(b);
+    FormRunner.FormResultAndBean formResult = form.runWithBean(b);
 
-    if (formResult.isValid()) {
+    if (formResult.getFr().isValid()) {
       // model.addAttribute("ok", true);
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
@@ -55,9 +55,9 @@ public class ExampleController {
   @RequestMapping("/bootstrap5")
   public String bootstrap5(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormResult formResult = form.runWithBean(b);
+    FormRunner.FormResultAndBean formResult = form.runWithBean(b);
 
-    if (formResult.isValid()) {
+    if (formResult.getFr().isValid()) {
       // model.addAttribute("ok", true);
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
