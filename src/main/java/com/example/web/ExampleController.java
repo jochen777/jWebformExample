@@ -2,6 +2,9 @@ package com.example.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Validator;
+
+import jwebform.integration.FormResultAndBean;
+import jwebform.resultprocessor.ModelResultProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -41,9 +44,9 @@ public class ExampleController {
   @RequestMapping("/bootstrap3")
   public String bootstrap3(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormRunner.FormResultAndBean formResult = form.runWithBean(b);
+    FormResultAndBean formResult = form.runWithBean(b);
 
-    if (formResult.getFr().isValid()) {
+    if (formResult.isValid()) {
       // model.addAttribute("ok", true);
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
@@ -55,9 +58,9 @@ public class ExampleController {
   @RequestMapping("/bootstrap5")
   public String bootstrap5(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormRunner.FormResultAndBean formResult = form.runWithBean(b);
+    FormResultAndBean formResult = form.runWithBean(b);
 
-    if (formResult.getFr().isValid()) {
+    if (formResult.isValid()) {
       // model.addAttribute("ok", true);
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
@@ -86,7 +89,7 @@ public class ExampleController {
     //
     // model.addAttribute("form", renderer.render(formResult, "POST", true));
     model.addAttribute("form_raw",
-        formResult.getFormModel(FormModel.Html5Validation.ON, FormModel.Method.POST));
+        formResult.process(new ModelResultProcessor()));
     if (formResult.isValid()) {
       System.err.println("Everything is fine!");
     }
@@ -107,7 +110,7 @@ public class ExampleController {
     // ThemeJavaRenderer renderer = new ThemeJavaRenderer(
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     // model.addAttribute("form", renderer.render(formResult, "GET", true));
-    model.addAttribute("form_raw", formResult.getFormModel());
+    model.addAttribute("form_raw", formResult.process(new ModelResultProcessor()));
     if (formResult.isValid()) {
       System.err.println("Everything is fine!");
     }
