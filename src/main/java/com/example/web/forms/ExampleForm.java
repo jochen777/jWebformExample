@@ -107,7 +107,7 @@ public class ExampleForm implements FormGenerator {
   }
 
   public LocalDate getDateValue(FormResult formResult) {
-    return (LocalDate) formResult.getFieldResults().getObectValue("dateInput");
+    return (LocalDate) formResult.getFieldResults().getObjectValue("dateInput");
   }
 
 
