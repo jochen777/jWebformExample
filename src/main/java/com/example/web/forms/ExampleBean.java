@@ -13,16 +13,17 @@ import jwebform.integration.bean2form.annotations.UseFieldType;
 public class ExampleBean {
 
   @UseDecoration(label = "Dein Name", helpText = "Bitte gebe hier deinen Namen ein",
-      placeholder = "Max")
+      placeholder = "Max", isTranslated = true)
   public String name = "";
 
   @UseDecoration(label = "Bitte dein Nachname", helpText = "Bitte gebe hier deinen Nachnamen ein",
-      placeholder = "Mustermann")
+      placeholder = "Mustermann", isTranslated = true)
   public String lastname = "";
 
-  @UseDecoration(label = "Dein Alter")
+  @UseDecoration(label = "Dein Alter", isTranslated = true)
   public Integer age = 14;
 
+  @UseDecoration(label = "Optin", isTranslated = true)
   public Boolean optin = false;
 
   @IgnoreField

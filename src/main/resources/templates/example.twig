@@ -35,15 +35,15 @@
 
 
 <div style="width:500px; margin-left:50px">
-<h1>Hello World - Twig!</h1>
-{{ jw_renderFormFree(form, {"override_types": {},
+<h1>Hello World - Twig!!</h1>
+{{ jw_renderFormFree(form.formModel, {"override_types": {},
    "form_class": "form-new"}) }}
 {#{ jw_renderForm(form) | raw }#}
 </div>
 
 <hr>
 <div style="width:500px; margin-left:50px">
-{{ form_rendered.html | raw }}
+{{ form.html | raw }}
 </div>
 </body>
 </html>

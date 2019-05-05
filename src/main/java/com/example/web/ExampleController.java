@@ -13,6 +13,7 @@ import com.example.web.forms.ExampleForm;
 import jwebform.FormModel;
 import jwebform.FormResult;
 import jwebform.integration.ContainerFormRunner;
+import jwebform.integration.FormResultAndBean;
 import jwebform.integration.FormRunner;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +30,7 @@ public class ExampleController {
 
   @RequestMapping("/bootstrap2")
   public String bootstrap2(FormRunner form) {
-    FormResult formResult = form.run(new ExampleForm("1"));
+    FormResult formResult = form.runWitFormGenerator(new ExampleForm("1"));
 
     if (formResult.isValid()) {
       // model.addAttribute("ok", true);
@@ -41,10 +42,11 @@ public class ExampleController {
   @RequestMapping("/bootstrap3")
   public String bootstrap3(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormResult formResult = form.run(b);
+    FormResultAndBean formResult = form.runWithBean(b);
 
     if (formResult.isValid()) {
       // model.addAttribute("ok", true);
+
       log.info("Name is: " + b.name);
       log.info("Birthday is: " + b.birthDay);
     }
@@ -55,7 +57,7 @@ public class ExampleController {
   @RequestMapping("/bootstrap5")
   public String bootstrap5(FormRunner form) {
     ExampleBean b = new ExampleBean();
-    FormResult formResult = form.run(b);
+    FormResultAndBean formResult = form.runWithBean(b);
 
     if (formResult.isValid()) {
       // model.addAttribute("ok", true);
@@ -86,7 +88,7 @@ public class ExampleController {
     //
     // model.addAttribute("form", renderer.render(formResult, "POST", true));
     model.addAttribute("form_raw",
-        formResult.getFormModel(FormModel.Html5Validation.ON, FormModel.Method.POST));
+        new FormModel(formResult, FormModel.Method.POST, FormModel.Html5Validation.ON));
     if (formResult.isValid()) {
       System.err.println("Everything is fine!");
     }
@@ -107,7 +109,8 @@ public class ExampleController {
     // ThemeJavaRenderer renderer = new ThemeJavaRenderer(
     // new StandardMapper(jwebform.themes.sourcecode.BootstrapTheme.instance(msg -> msg)));
     // model.addAttribute("form", renderer.render(formResult, "GET", true));
-    model.addAttribute("form_raw", formResult.getFormModel());
+    model.addAttribute("form_raw",
+        new FormModel(formResult, FormModel.Method.POST, FormModel.Html5Validation.ON));
     if (formResult.isValid()) {
       System.err.println("Everything is fine!");
     }
